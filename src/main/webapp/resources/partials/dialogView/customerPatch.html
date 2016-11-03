@@ -1,0 +1,96 @@
+
+<div class="modal-content">
+	<div class="modal-header label-primary">
+		<button type="button" class="close" data-dismiss="modal" ng-click="cancel()">
+			<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+		</button>
+		
+		<h4 class="modal-title">
+			<span style="color: white"><span class="glyphicon glyphicon-pencil">고객사 패치</span></span>
+		</h4>
+	</div>
+
+	<div class="modal-body">
+        <div class="form-group">
+        	<label id='site' data='{{customer.site}}'>사이트 : {{customer.site}}</label><br>
+            <label id='domain' data='{{customer.domain}}'>도메인 : {{customer.domain}}</label><br>
+            <label id='hostId' data='{{customer.hostId}}'>호스트아이디 : {{customer.hostId}}</label>
+        </div>
+        <div class="form-group">
+            <!--<input type="text" class="form-control" ng-model="domain" ng-init="domain=customer.domain" placeholder="아이디를 입력하세요.">-->
+            <input type="text" class="form-control" id="siteId" placeholder="아이디를 입력하세요.">
+            <input type="password" class="form-control" id="sitePw" placeholder="비밀번호를 입력하세요.">
+        </div>
+        
+        <div class="form-group">
+        	<tabset> 
+        		<tab heading="표준판" data-patch-type="standard" ng-click="move()">
+				   <div class="table-container"	ng-controller="PatchCtrl as mc">
+					<table class="table table-striped" st-pipe="mc.standardCallServer" st-table="mc.standardDisplayed">
+						<thead>
+							<tr>
+								<th st-sort="attach.name" st-skip-natural="true">파일명</th>
+								<th st-sort="revision" st-skip-natural="true">리비전</th>
+								<th st-sort="revision" st-skip-natural="true">등록일</th>
+								<th st-skip-natural="true">파일크기</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr st-select-row="row" ng-repeat="row in mc.standardDisplayed" data-attach-id="{{row.attach.id}}" data-type="daouoffice" data-attach-path="{{row.attach.path}}">
+								<td>{{row.attach.name}}</td>
+								<td>{{row.revision}}</td>
+								<td>{{row.createdAt | date : 'yyyy/MM/dd/ HH:mm:ss'}}</td>
+								<td>{{row.attach.size}}KB</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td class="text-center" st-pagination="" st-items-by-page="5" colspan="4"></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				
+        		</tab>
+			   	<tab heading="커스텀" data-patch-type="custom" ng-click="move()">
+			   	<!-------------------------------------------------------------------------->
+				   <div class="table-container"	ng-controller="PatchCtrl as mc">
+					<table class="table table-striped" st-pipe="mc.customCallServer" st-table="mc.customDisplayed">
+						<thead>
+							<tr>
+								<th st-sort="attach.name" st-skip-natural="true">파일명</th>
+								<th st-sort="revision" st-skip-natural="true">리비전</th>
+								<th st-sort="revision" st-skip-natural="true">등록일</th>
+								<th st-skip-natural="true">파일크기</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr st-select-row="row" ng-repeat="row in mc.customDisplayed" data-attach-id="{{row.attach.id}}" data-type="custom" data-attach-path="{{row.attach.path}}">
+								<td>{{row.attach.name}}</td>
+								<td>{{row.revision}}</td>
+								<td>{{row.createdAt | date : 'yyyy/MM/dd/ HH:mm:ss'}}</td>
+								<td>{{row.attach.size}}KB</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td class="text-center" st-pagination="" st-items-by-page="5" colspan="4"></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<!-------------------------------------------------------------------------->
+			   </tab>
+			  
+			 </tabset>
+        </div>
+
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal"
+			ng-click="cancel()">취소</button>
+		<!-- <button type="button" class="btn btn-primary" ng-click="patch(customer.domain, customer.hostId)">패치</button> -->
+		<button type="button" class="btn btn-primary" ng-click="upload(customer.domain, customer.hostId)">파일 업로드</button>
+	</div>
+</div>

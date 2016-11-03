@@ -1,0 +1,21 @@
+<div class="modal-header label-success" >
+	<h4 class="modal-title">{{project.popupName}}</h4>
+</div>
+<div id="log" class="modal-body" style="max-height: 700px; overflow-y: auto;">
+<pre></pre>
+</div>
+
+<div class="modal-body">
+	<div class="form-group">
+		<label>옵션</label>
+		<input type="text" class="form-control" ng-model="option" placeholder="옵션을 입력하세요.(--since=2weeks)">
+	</div>
+    <div id="log" style="max-height: 700px; overflow-y: auto;">
+        <pre style="display: none;"></pre>
+    </div>
+</div>
+
+<div class="modal-footer">
+	<button class="btn" ng-click="build()">실행</button>
+	<button class="btn" ng-click="close()">닫기</button>
+</div>

@@ -1,0 +1,38 @@
+
+<div class="modal-content">
+	<div class="modal-header label-primary">
+		<button type="button" class="close" data-dismiss="modal" ng-click="cancel()">
+			<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+		</button>
+		
+		<h4 class="modal-title">
+			<span style="color: white"><span class="glyphicon glyphicon-pencil">&nbsp;계정수정</span></span>
+		</h4>
+	</div>
+
+	<div class="modal-body">
+		<div class="form-group">
+			<label>아이디 &nbsp;:&nbsp;{{user.loginId}}</label> 
+		</div>
+		<div class="form-group">
+			<label>이름&nbsp;:&nbsp;{{user.name}}</label> 
+		</div>
+		<div class="form-group">
+			<label>Email address</label> <input type="email" class="form-control"
+				ng-model="email" placeholder="Enter email">
+		</div>
+		<div class="form-group">
+			<label">Password</label> <input type="password" class="form-control"
+				ng-model="password" placeholder="Password">
+		</div>
+		<div class="form-group">
+			<label">Git Group</label> <input type="text" class="form-control"
+				ng-model="gitGroup" placeholder="그룹명은 ; 로 구분해서 적어주세요">
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" ng-click="modify()">변경</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">취소</button>
+	</div>
+</div>

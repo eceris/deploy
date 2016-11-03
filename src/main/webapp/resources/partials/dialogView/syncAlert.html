@@ -1,0 +1,19 @@
+<div class="modal-header label-warning">
+	<h4 class="modal-title">
+		<span class="glyphicon glyphicon-warning-sign"></span> 이미 동기화된 파일입니다.
+	</h4>
+</div>
+
+<div class="modal-body">
+	<table>
+		<tr data-ng-repeat="file in files">
+			<th>{{file}}</th>
+	</table>
+</div>
+
+<div class="modal-footer">
+	<button class="btn" ng-click="ok()">확인</button>
+</div>
+
+
+

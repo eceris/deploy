@@ -1,0 +1,18 @@
+<div class="modal-header label-success">
+	<h4>
+		<span style="color: white"><span class="glyphicon glyphicon-ok"></span>&nbsp;계정생성을 성공하였습니다.</span>
+	</h4>
+</div>
+<div class="modal-body">
+
+	<label>호스트 ID &nbsp;:&nbsp; {{customer.hostId}}</label><br>
+	<label>사이트 &nbsp;:&nbsp; {{customer.site}}</label><br>
+	<label>생성일 &nbsp;:&nbsp; {{customer.createdAt | date}}</label>
+	
+</div>
+<div class="modal-footer">
+	<button class="btn" ng-click="success()">확인</button>
+</div>
+
+
+

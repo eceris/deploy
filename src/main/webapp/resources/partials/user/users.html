@@ -1,0 +1,50 @@
+<div ng-app="distributeApp" class="table-container" ng-controller="userCtrl as mc">
+   <div class="page-header">
+      <h1>계정관리</h1>
+      <p class="lead">배포시스템의 계정을 관리합니다. <br>
+         GUEST 권한의 경우 빌드된 패키지의 다운로드만 가능하며 DEV 권한의 경우 패키지의 빌드, 삭제, 다운로드가 가능합니다.
+      </p>
+      <button type="button" ng-click="goToCreate()" class="btn btn-sm btn-danger">
+      <i class="glyphicon glyphicon-hdd" title="계정생성">계정생성</i>
+      </button>
+   </div>
+   <table class="table table-striped" st-pipe="mc.callServer" st-table="mc.displayed">
+      <thead>
+         <tr>
+            <th st-sort="name" st-skip-natural="true">이름</th>
+            <th st-sort="loginId" st-skip-natural="true">아이디</th>
+            <th st-sort="email" st-skip-natural="true">메일</th>
+            <th st-sort="role" st-skip-natural="true">권한</th>
+            <th st-sort="gitGroup" st-skip-natural="true">그룹</th>
+            <th>수정</th>
+         </tr>
+      </thead>
+      <tbody ng-show="!mc.isLoading">
+         <tr ng-repeat="row in mc.displayed">
+            <td>{{row.name}}</td>
+            <td>{{row.loginId}}</td>
+            <td>{{row.email}}</td>
+            <td>{{row.role}}</td>
+            <td>{{row.gitGroup}}</td>
+            <td>
+               <button type="button" ng-click="goToUpdate(row)" class="btn btn-sm btn-primary">
+               <i class="glyphicon glyphicon-edit" title="수정"></i>
+               </button>
+            </td>
+         </tr>
+      </tbody>
+      <tbody ng-show="mc.isLoading">
+         <tr>
+            <td colspan="6" class="text-center">
+               <div class="loading-indicator"></div>
+            </td>
+         </tr>
+      </tbody>
+      <tfoot>
+         <tr>
+            <td class="text-center" st-pagination="" st-items-by-page="20" colspan="6">
+            </td>
+         </tr>
+      </tfoot>
+   </table>
+</div>

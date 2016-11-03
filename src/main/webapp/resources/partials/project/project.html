@@ -1,0 +1,83 @@
+<div ng-app="distributeApp" ng-controller="projectDetailController as pc" ng-init="get()">
+
+	<div class="page-header">
+      <h1>프로젝트관리</h1>
+      <p class="lead">프로젝트의 패키지를 관리합니다.<br>
+         GUEST 권한의 경우 빌드된 패키지의 다운로드만 가능하며 DEV 권한의 경우 패키지의 빌드, 삭제, 다운로드가 가능합니다.
+      </p>
+      <button type="button" ng-click="build()" class="btn btn-sm btn-danger">
+         	<i class="glyphicon glyphicon-hdd" title="빌드">빌드</i>
+         </button>
+          <button type="button" ng-click="standardbuild()" class="btn btn-sm btn-warning">
+          	<i class="glyphicon glyphicon-inbox" title="표준빌드">표준빌드</i>
+          </button>
+         <button type="button" ng-click="checksource()" class="btn btn-sm btn-primary">
+         	<i class="glyphicon glyphicon-check" title="수정사항">수정사항</i>
+         </button>
+         <button type="button" ng-click="mobile()" class="btn btn-sm btn-success">
+         	<i class="glyphicon glyphicon-download-alt" title="모바일빌드">모바일빌드</i>
+         </button>
+   </div>
+   
+   <div class="col-sm-3">
+      <ul class="list-group">
+         <li class="list-group-item">이름 : {{data.name}}</li>
+         <li class="list-group-item">경로 : {{data.path}}</li>
+         <li class="list-group-item">네임스페이스 : {{data.namespace}}</li>
+         <li class="list-group-item">생성일 : {{data.createdAt | date : 'yyyy/MM/dd HH:mm:ss'}}</li>
+         <li class="list-group-item">생성자 : TODO</li>
+         <li class="list-group-item">마지막 빌드일 : TODO</li>
+         <li class="list-group-item">마지막 작업자 : TODO</li>
+      </ul>
+   </div>
+   <div class="col-sm-9" style="height:350px;">
+      <table class="table table-striped" st-pipe="pc.callServer" st-table="pc.displayed">
+         <thead>
+            <tr>
+               <th st-sort="category" st-skip-natural="true">카테고리</th>
+               <th st-sort="attach.name" st-skip-natural="true">파일명</th>
+               <th st-sort="revision" st-skip-natural="true">리비전</th>
+               <th st-sort="cretedAt" st-skip-natural="true">등록일</th>
+               <th st-sort="attach.size" st-skip-natural="true">파일크기</th>
+               <th>다운로드</th>
+               <th>삭제</th>
+            </tr>
+         </thead>
+         <tbody ng-show="!pc.isLoading">
+            <tr ng-repeat="row in pc.displayed">
+               <td class="ng-binding">{{row.category}}</td>
+               <td class="ng-binding">{{row.attach.name}}</td>
+               <td class="ng-binding">{{row.revision}}</td>
+               <td class="ng-binding"> {{row.createdAt | date : 'yyyy/MM/dd/ HH:mm:ss'}}</td>
+               <td class="ng-binding">{{row.attach.size}}KB</td>
+               <td>
+                  <button type="button" ng-controller="fileListCtrl" ng-click="download(row.id)" class="btn btn-sm btn-primary ng-scope">
+                  <i class="glyphicon glyphicon-download" title="다운로드"></i>
+                  </button>
+               </td>
+               <td>
+                  <button type="button" ng-controller="fileListCtrl" ng-click="delete(row.id)" class="btn btn-sm btn-danger ng-scope">
+                  <i class="glyphicon glyphicon-remove" title="삭제"></i>
+                  </button>
+               </td>
+            </tr>
+         </tbody>
+         <tbody ng-show="pc.isLoading">
+            <tr>
+               <td colspan="7" class="text-center">
+                  <div class="loading-indicator"></div>
+               </td>
+            </tr>
+         </tbody>
+         <tfoot>
+        <tr>
+            <td class="text-center" st-pagination="" st-items-by-page="5"
+                colspan="7"></td>
+        </tr>
+        </tfoot>
+      </table>
+   </div>
+   
+   <br>
+   <pre><code>Example code block</code></pre>
+</div>

@@ -1,0 +1,36 @@
+<div ng-app="distributeApp" ng-controller="ProjectCtrl as pp" >
+	<div class="jumbotron" style="height:10px;">
+		<p>프로젝트 목록</p>
+	</div>
+   <table class="table" st-pipe="pp.callServer" st-table="pp.displayed">
+      <thead>
+         <tr>
+         	<th>네임스페이스</th>
+            <th st-sort="name">이름</th>
+            <th st-sort="path">경로</th>
+         </tr>
+         <tr>
+         	<th></th>
+            <th><input st-search="name"></th>
+            <th><input st-search="path"></th>
+         </tr>
+      </thead>
+      <tbody ng-show="!pp.isLoading">
+         <tr ng-repeat="row in pp.displayed">
+            <td>{{row.namespace.path}}</td>
+            <td><a href="/#/project/{{row.id}}">{{row.name}}</a></td>
+            <td><a href="/#/project/{{row.id}}">{{row.path}}</a></td>
+         </tr>
+      </tbody>
+      <tbody ng-show="pp.isLoading">
+         <tr>
+            <td colspan="3" class="text-center">Loading ... </td>
+         </tr>
+      </tbody>
+      <tfoot>
+         <tr>
+            <td class="text-center" st-pagination="" st-items-by-page="20" colspan="6"></td>
+         </tr>
+      </tfoot>
+   </table>
+</div>

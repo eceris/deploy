@@ -1,0 +1,59 @@
+<div class="jumbotron" ng-app="distributeApp" style="height:10px;">
+	<p>다운로드 히스토리</p>
+</div>
+
+<div ng-app="distributeApp" class="table-container"
+	ng-controller="historyListCtrl as pc">
+	<table class="table table-striped" st-pipe="pc.callServer"
+		st-table="pc.displayed">
+		<thead>
+			<tr>
+				<th>종류</th>
+				<th st-sort="type" st-skip-natural="true">TYPE</th>
+				<th>사용자</th>
+				<th st-sort="category" st-skip-natural="true">카테고리</th>
+				<th st-sort="site" st-skip-natural="true">Site</th>
+				<th st-sort="version" st-skip-natural="true">Version</th>
+				<th st-sort="revision" st-skip-natural="true">Revision</th>
+				<th st-sort="fileName" st-skip-natural="true">파일명</th>
+			</tr>
+		</thead>
+		<tbody ng-show="!pc.isLoading">
+			<tr ng-repeat="history in pc.displayed">
+				<td>
+					<div ng-show="history.hostId != null">CUSTOMER</div>
+					<div ng-show="history.loginId != null">USER</div>
+				</td>
+				<td>{{history.type}}</td>
+				<td>
+					<div ng-show="history.hostId != null">{{history.site}} /
+						{{history.hostId}}</div>
+
+					<div ng-show="history.loginId != null">{{history.loginId}} /
+						{{history.userName}}</div>
+				</td>
+				<td>{{history.category}}</td>
+				<td>{{history.site}}</td>
+				<td>{{history.version}}</td>
+				<td>{{history.revision}}</td>
+				<td>{{history.fileName}}</td>
+			</tr>
+		</tbody>
+
+
+		<tbody ng-show="pc.isLoading">
+			<tr>
+				<td colspan="8" class="text-center"><div
+						class="loading-indicator"></div></td>
+			</tr>
+		</tbody>
+
+		<tfoot>
+			<tr>
+				<td class="text-center" st-pagination="" st-items-by-page="15"
+					colspan="8"></td>
+			</tr>
+		</tfoot>
+	</table>
+
+</div>

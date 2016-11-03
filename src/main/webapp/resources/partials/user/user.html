@@ -1,0 +1,72 @@
+<div ng-app="distributeApp" class="table-container" ng-controller="userDetailCtrl" ng-init="init(id)">
+    <div class="page-header">
+        <h1>계정관리</h1>
+        <p class="lead">배포시스템의 계정을 관리합니다. <br>
+            GUEST 권한의 경우 빌드된 패키지의 다운로드만 가능하며 DEV 권한의 경우 패키지의 빌드, 삭제, 다운로드가 가능합니다. <br>
+            각 사용자의 권한에 맞게 설정해주세요.
+        </p>
+    </div>
+    <script type="text/ng-template" id="deleteModalTemplate">
+        <div class="modal-header">
+            <h3 class="modal-title">계정 삭제</h3>
+        </div>
+        <div class="modal-body">
+        삭제 할 경우 복구가 불가합니다.<br> 삭제하시겠습니까?
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger" ng-click="del()">삭제</button>
+            <button class="btn btn-praimary" ng-click="cancel()">취소</button>
+        </div>
+    </script>
+    <div class="col-lg-12">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td><label>이름</label></td>
+                    <td><input type="text" class="form-control" ng-model="user.name" placeholder="이름을 입력하세요."></td>
+                    <td><label>아이디</label></td>
+                    <td><input type="text" class="form-control" ng-model="user.loginId" placeholder="아이디를 입력하세요."></td>
+                </tr>
+                <tr>
+                    <td><label>이메일</label></td>
+                    <td><input type="text" class="form-control" ng-model="user.email" placeholder="이메일을 입력하세요."></td>
+                    <td><label>비밀번호</label></td>
+                    <td><input type="text" class="form-control" ng-model="user.password" placeholder="비밀번호를 입력하세요."></td>
+                </tr>
+                <tr>
+                    <td><label>권한</label></td>
+                    <td colspan="3">
+                        <div class="btn-group">
+                            <label class="btn btn-primary" ng-model="role" btn-radio="'ROLE_GUEST'">Guest</label>
+                            <label class="btn btn-primary" ng-model="role" btn-radio="'ROLE_DEVELOPER'">Developer</label>
+                            <label class="btn btn-primary" ng-model="role" btn-radio="'ROLE_ADMIN'">Admin</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>gitGroup</label></td>
+                    <td colspan="3">
+                        <div class="btn-group">
+                        		<label class="btn btn-primary" btn-checkbox ng-model="group.value" ng-repeat="group in namespaces">{{group.path}}</label>
+                        
+                           <!--  <label class="btn btn-primary" ng-model="git.do" btn-checkbox>DO</label>
+                            <label class="btn btn-primary" ng-model="git.tms" btn-checkbox>TMS</label>
+                            <label class="btn btn-primary" ng-model="git.dev" btn-checkbox>DEV</label>
+                            <label class="btn btn-primary" ng-model="git.eastarjet" btn-checkbox>EASTARJET</label>
+                            <label class="btn btn-primary" ng-model="git.edu" btn-checkbox>EDU</label> -->
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer" ng-if="id=='create'">
+        <button type="button" class="btn btn-default" ng-click="goToList()">목록으로</button>
+        <button type="button" class="btn btn-primary" ng-click="create(user, role, namespaces)">등록</button>
+    </div>
+    <div class="modal-footer" ng-if="id!='create'">
+        <button type="button" class="btn btn-default" ng-click="goToList()">목록으로</button>
+        <button type="button" class="btn btn-primary" ng-click="update(user, role, namespaces)">수정</button>
+        <button type="button" class="btn btn-danger" ng-click="delete(user)">삭제</button>
+    </div>
+</div>

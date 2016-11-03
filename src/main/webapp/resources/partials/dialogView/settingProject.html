@@ -1,0 +1,38 @@
+<div class="modal-content">
+	<div class="modal-header label-primary">
+		<button type="button" class="close" data-dismiss="modal" ng-click="cancel()">
+			<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+		</button>
+		
+		<h4 class="modal-title">
+			<span style="color: white"><span class="glyphicon">프로젝트 설정</span></span>
+		</h4>
+	</div>
+
+	<div class="modal-body">
+        <div class="form-group">
+            <label>고객사 : {{projectInfo.siteName}}</label>
+        </div>
+		<div class="form-group">
+			<label>사이트명</label>
+			<input type="text" class="form-control" ng-model="siteName" placeholder="사이트명을 입력하세요.">
+			
+			<label>GO-WEB</label>
+			<input type="text" class="form-control" ng-model="goHome" placeholder="GO-WEB 디렉토리를 입력하세요. (go-web)">
+			
+			<label>GO-MAIL</label>
+			<input type="text" class="form-control" ng-model="mailHome" placeholder="GO-MAIL 디렉토리를  입력하세요. (go-mail)">
+			
+			<label>GO-ADMIN</label>
+			<input type="text" class="form-control" ng-model="adminHome" placeholder="GO-ADMIN 디렉토리를  입력하세요. (go-admin)">
+		</div>
+        <div id="log" style="max-height: 700px; overflow-y: auto;">
+            <pre style="display: none;"></pre>
+        </div>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="saveSettingInfo(siteName, goWeb, goMail, goAdmin)">저장</button>
+		<button id="buildBtn" type="button" class="btn btn-primary" ng-click="cancel()">취소</button>
+	</div>
+</div>

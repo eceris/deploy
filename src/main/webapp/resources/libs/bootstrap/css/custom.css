@@ -1,0 +1,114 @@
+@font-face {
+  font-family: 'Nanum Barun Gothic';
+  font-style: normal;
+  font-weight: 200;
+  src: url(../fonts/nanum/NanumBarunGothicUltraLight.eot);
+  src: local('Nanum Barun Gothic UltraLight'),
+       local('NanumBarunGothicUltraLight'),
+       url(../fonts/nanum/NanumBarunGothicUltraLight.eot?#iefix) format('embedded-opentype'),
+       url(../fonts/nanum/NanumBarunGothicUltraLight.woff2) format('woff2'),
+       url(../fonts/nanum/NanumBarunGothicUltraLight.woff) format('woff'),
+       url(../fonts/nanum/NanumBarunGothicUltraLight.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Nanum Barun Gothic';
+  font-style: normal;
+  font-weight: 300;
+  src: url(../fonts/nanum/NanumBarunGothicLight.eot);
+  src: local('Nanum Barun Gothic Light'),
+       local('NanumBarunGothicLight'),
+       url(../fonts/nanum/NanumBarunGothicLight.eot?#iefix) format('embedded-opentype'),
+       url(../fonts/nanum/NanumBarunGothicLight.woff2) format('woff2'),
+       url(../fonts/nanum/NanumBarunGothicLight.woff) format('woff'),
+       url(../fonts/nanum/NanumBarunGothicLight.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Nanum Barun Gothic';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/nanum/NanumBarunGothic.eot);
+  src: local('Nanum Barun Gothic'),
+       local('NanumBarunGothic'),
+       url(../fonts/nanum/NanumBarunGothic.eot?#iefix) format('embedded-opentype'),
+       url(../fonts/nanum/NanumBarunGothic.woff2) format('woff2'),
+       url(../fonts/nanum/NanumBarunGothic.woff) format('woff'),
+       url(../fonts/nanum/NanumBarunGothic.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Nanum Barun Gothic';
+  font-style: normal;
+  font-weight: 700;
+  src: url(../fonts/nanum/NanumBarunGothicBold.eot);
+  src: local('Nanum Barun Gothic Bold'),
+       local('NanumBarunGothicBold'),
+       url(../fonts/nanum/NanumBarunGothicBold.eot?#iefix) format('embedded-opentype'),
+       url(../fonts/nanum/NanumBarunGothicBold.woff2) format('woff2'),
+       url(../fonts/nanum/NanumBarunGothicBold.woff) format('woff'),
+       url(../fonts/nanum/NanumBarunGothicBold.ttf) format('truetype');
+}
+body{	
+	margin-top:70px;
+	font-family: 돋움;
+}
+.my-drop-zone { border: dotted 3px lightgray; }
+.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+.another-file-over-class { border: dotted 3px green; }
+
+.navbar{
+	border:0px;	
+}
+div.navBiz {
+	height: 5px;
+	position: relative;
+	background: url("../../../image/bgNav2.gif") no-repeat center 0;
+}
+div.navBiz div.btnBox {
+	position: relative;
+	margin: 0 auto;
+	width: 940px;
+	height: 100%;
+	background: #006699;
+}
+div.navBiz div.btnBox span.heading {
+	position: absolute;
+	width: 70px;
+	height: 5px;
+	left: -70px;
+	background: #1EAA47;
+}
+.header a.logo {
+	display: block;
+	background: url("../../../image/logo.gif") no-repeat;
+	width: 112px;
+	height: 38px;
+	text-indent: -3000em;
+}
+
+.wrapContainer{
+	margin-top:20px;	
+}
+#accordion .glyphicon,#accordion2 .glyphicon,#accordion3 .glyphicon { margin-right:10px; }
+.panel-collapse>.list-group .list-group-item:first-child {border-top-right-radius: 0;border-top-left-radius: 0;}
+.panel-collapse>.list-group .list-group-item {border-width: 1px 0;}
+.panel-collapse>.list-group {margin-bottom: 0;}
+.panel-collapse .list-group-item {border-radius:0;}
+
+.panel-collapse .list-group .list-group {margin: 0;margin-top: 10px;}
+.panel-collapse .list-group-item li.list-group-item {margin: 0 -15px;border-top: 1px solid #ddd;border-bottom: 0;padding-left: 30px;}
+.panel-collapse .list-group-item li.list-group-item:last-child {padding-bottom: 0;}
+
+.panel-collapse div.list-group div.list-group{margin: 0;}
+.panel-collapse div.list-group .list-group a.list-group-item {border-top: 1px solid #ddd;border-bottom: 0;padding-left: 30px;}
+
+.page-header{
+	margin-top : 0px;
+}
+
+
+
+.st-selected {
+	background: #216eff !important;
+}

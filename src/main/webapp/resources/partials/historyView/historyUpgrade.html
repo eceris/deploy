@@ -1,0 +1,36 @@
+<div class="jumbotron" ng-app="distributeApp" style="height:10px;">
+    <p>업그레이드 히스토리</p>
+</div>
+<div ng-app="distributeApp" class="table-container"
+    ng-controller="historyUpgradeListCtrl as pc">
+    <table class="table table-striped" st-pipe="pc.callServer"
+        st-table="pc.displayed">
+        <thead>
+            <tr>
+                <th st-sort="type" st-skip-natural="true">Type</th>
+                <th>사용자</th>
+                <th st-sort="category" st-skip-natural="true">카테고리</th>
+                <th st-sort="site" st-skip-natural="true">Site</th>
+                <th st-sort="hostId" st-skip-natural="true">호스트아이디</th>
+                <th st-sort="version" st-skip-natural="true">Version</th>
+                <th st-sort="fileName" st-skip-natural="true">파일명</th>
+            </tr>
+        </thead>
+        <tbody ng-show="!pc.isLoading">
+            <tr ng-repeat="history in pc.displayed">
+                <td>{{history.type}}</td>
+                <td>{{history.loginId}} / {{history.userName}}</td>
+                <td>{{history.category}}</td>
+                <td>{{history.site}}</td>
+                <td>{{history.hostId}}</td>
+                <td>{{history.version}}</td>
+                <td>{{history.fileName}}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="text-center" st-pagination="" st-items-by-page="5" colspan="7"></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
