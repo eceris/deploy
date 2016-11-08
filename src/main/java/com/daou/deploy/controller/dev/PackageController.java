@@ -46,7 +46,7 @@ public class PackageController {
 
     }
 
-    @RequestMapping(value = "/checksource/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/checksource/{id}", method = RequestMethod.POST)
     public ResponseEntity checksource(@PathVariable("id") Long id, HttpServletResponse resp) throws IOException {
         packageService.checksource(resp, id);
         return new ResponseEntity<>(HttpStatus.OK);
