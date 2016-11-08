@@ -36,7 +36,7 @@
             <tr>
                <th st-sort="category" st-skip-natural="true">카테고리</th>
                <th st-sort="attach.name" st-skip-natural="true">파일명</th>
-               <th st-sort="revision" st-skip-natural="true">리비전</th>
+               <!-- <th st-sort="revision" st-skip-natural="true">리비전</th> -->
                <th st-sort="cretedAt" st-skip-natural="true">등록일</th>
                <th st-sort="attach.size" st-skip-natural="true">파일크기</th>
                <th>다운로드</th>
@@ -47,7 +47,7 @@
             <tr ng-repeat="row in pc.displayed">
                <td class="ng-binding">{{row.category}}</td>
                <td class="ng-binding">{{row.attach.name}}</td>
-               <td class="ng-binding">{{row.revision}}</td>
+               <!-- <td class="ng-binding">{{row.revision}}</td> -->
                <td class="ng-binding"> {{row.createdAt | date : 'yyyy/MM/dd/ HH:mm:ss'}}</td>
                <td class="ng-binding">{{row.attach.size}}KB</td>
                <td>
@@ -64,7 +64,7 @@
          </tbody>
          <tbody ng-show="pc.isLoading">
             <tr>
-               <td colspan="7" class="text-center">
+               <td colspan="6" class="text-center">
                   <div class="loading-indicator"></div>
                </td>
             </tr>
@@ -72,7 +72,7 @@
          <tfoot>
         <tr>
             <td class="text-center" st-pagination="" st-items-by-page="5"
-                colspan="7"></td>
+                colspan="6"></td>
         </tr>
         </tfoot>
       </table>

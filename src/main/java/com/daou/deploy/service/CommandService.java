@@ -16,7 +16,6 @@ public class CommandService {
     public String executeCommand(HttpServletResponse resp, String command) {
         StringBuffer output = new StringBuffer();
         Process p = null;
-
         try {
             p = Runtime.getRuntime().exec(command);
             InputStream stream = p.getInputStream();

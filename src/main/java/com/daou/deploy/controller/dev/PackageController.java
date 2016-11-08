@@ -2,6 +2,8 @@ package com.daou.deploy.controller.dev;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +47,8 @@ public class PackageController {
     }
 
     @RequestMapping(value = "/checksource/{id}", method = RequestMethod.GET)
-    public ResponseEntity checksource(@PathVariable("id") Long id) throws IOException {
-        packageService.checksource(id);
+    public ResponseEntity checksource(@PathVariable("id") Long id, HttpServletResponse resp) throws IOException {
+        packageService.checksource(resp, id);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }

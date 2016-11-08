@@ -22,7 +22,6 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import com.daou.deploy.properties.FileProperties;
 import com.daou.deploy.properties.LegacyConnectionProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
@@ -68,11 +67,6 @@ public class Application extends SpringBootServletInitializer {
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
         return characterEncodingFilter;
-    }
-
-    @Bean
-    public FileProperties fileProperties() {
-        return new FileProperties();
     }
 
     @Bean

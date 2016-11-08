@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,6 +43,9 @@ public class PackageService {
     @Autowired
     ProjectService projectService;
 
+    @Autowired
+    CommandService commandService;
+
     /**
      * 패키지 다운로드
      * 
@@ -73,19 +78,6 @@ public class PackageService {
         Project project = projectRepository.findByGitId(id);
         Page<Package> pkgs = packageRepository.findByProject(project, page);
         return new PageModel<Package>(pkgs);
-        //        ArrayList<Package> packages = Lists.newArrayList();
-        //        for (Package pkg : pkgs.getContent()) {
-        //            packages.add(pkg);
-        //        }
-        //        return new PageModel<Package>(packages, new PageInfo(pkgs));
-        //        public PageModel<PackageInfo> getFileList(int page, int offset, String property, String direction) {
-        //        Page<PackageInfo> packageInfoPage = packageInfoRepository.findAll(new PageRequest(page, offset, Direction
-        //                .fromString(direction), property));
-        //        List<PackageInfo> packages = new ArrayList<>();
-        //        for (PackageInfo packageInfo : packageInfoPage.getContent()) {
-        //            packages.add(packageInfo);
-        //        }
-        //        return new PageModel<PackageInfo>(packages, new PageInfo(packageInfoPage));
     }
 
     /**
@@ -93,6 +85,14 @@ public class PackageService {
      */
     public void search() {
         //TODO
+        //근데 필요할까?
+    }
+
+    /**
+     * 패키지 저장(패키지 빌드 수행후 /project/{id}로 들어오는데 이 api가 호출 될 경우 inteceptor가 잡아서 특정위치의 파일들을 entitiy화 함)
+     */
+    public void save() {
+
     }
 
     /**
@@ -105,8 +105,9 @@ public class PackageService {
      */
     public void build(Long id) throws JsonParseException, JsonMappingException, IOException {
         Project project = projectService.get(id);
-        Attach attach = new Attach("CUSTOM-chuncheon-201611031839.tar.gz", "", "tar.gz", 123l);
-        Package pkg = new Package("version", project, Long.toString(new Date().getTime()), Category.CUSTOM, attach);
+        int revision = new Date().hashCode();
+        Attach attach = new Attach("CUSTOM-chuncheon-" + revision + ".tar.gz", "", "tar.gz", 123l);
+        Package pkg = new Package("version", project, Long.toString(revision), Category.CUSTOM, attach);
         //        CUSTOM-chuncheon-201611031839.tar.gz
         packageRepository.save(pkg);
     }
@@ -125,7 +126,10 @@ public class PackageService {
      * 
      * @param id
      */
-    public void checksource(Long id) {
-        //TODO
+    public void checksource(HttpServletResponse resp, Long id)
+            throws JsonParseException, JsonMappingException, IOException {
+        Project project = projectService.get(id);
+        String command = "/data/do_source/scan.sh --p=" + project.getName() + " --path=" + project.getSshUrl();
+        String output = commandService.executeCommand(resp, command);
     }
 }

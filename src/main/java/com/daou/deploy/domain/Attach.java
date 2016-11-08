@@ -9,7 +9,7 @@ import lombok.Data;
 @Entity(name = "ds_attaches")
 public class Attach extends BaseEntity {
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String path;
 
     @Column(nullable = false)
