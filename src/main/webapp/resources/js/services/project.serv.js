@@ -155,11 +155,27 @@ app.factory('projectDetailFactory', function($q, $filter, $timeout, $http, cfpLo
     };
     
 	projectDetailFactory.build = function(id) {
-		$http.get('/dev/build/' + id).success(function(data, status, headers, config) {
-			console.log(status);
-		}).error(function(data, status, headers, config) {
-			console.log(status);
-		});
+		var logEl = $('#projectLog').find('pre');
+		logEl.html("");
+		var xhttp = new XMLHttpRequest();
+		var length = 0;
+		xhttp.open("POST", '/dev/build/'+id, true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == 2) {
+				cfpLoadingBar.start();
+			}
+			if (xhttp.readyState > 2 && xhttp.status == 200) {
+				var result = xhttp.responseText.substring(length, xhttp.responseText.length)
+				length = xhttp.responseText.length;
+				logEl.append('<code>' + result + '</code>');
+				$('#projectLog').scrollTop($('#projectLog')[0].scrollHeight);
+			}
+			if (xhttp.readyState == 4) {
+				cfpLoadingBar.complete();
+			}
+		};
+		xhttp.send();
 	};
 	projectDetailFactory.standardbuild = function(id) {
 		$http.get('/dev/build/' + id).success(function(data, status, headers, config) {
@@ -170,13 +186,8 @@ app.factory('projectDetailFactory', function($q, $filter, $timeout, $http, cfpLo
 	};
 	
 	projectDetailFactory.checksource = function(id) {
-//		$http.post('/dev/checksource/' + id).success(function(data, status, headers, config) {
-//			console.log(status);
-//		}).error(function(data, status, headers, config) {
-//			console.log(status);
-//		});
-		
 		var logEl = $('#projectLog').find('pre');
+		logEl.html("");
 		var xhttp = new XMLHttpRequest();
 		var length = 0;
 		xhttp.open("POST", '/dev/checksource/'+id, true);
@@ -196,9 +207,6 @@ app.factory('projectDetailFactory', function($q, $filter, $timeout, $http, cfpLo
 			}
 		};
 		xhttp.send();
-//		xhttp.send("id=" + id);
-		
-		
 	};
     
 	return projectDetailFactory;

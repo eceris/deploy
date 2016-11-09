@@ -29,27 +29,23 @@ public class PackageController {
     public ResponseEntity delete(@PathVariable("id") Long id) throws IOException {
         packageService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
-
     }
 
     @RequestMapping(value = "/build/{id}", method = RequestMethod.GET)
-    public ResponseEntity build(@PathVariable("id") Long id) throws IOException {
-        packageService.build(id);
+    public ResponseEntity build(@PathVariable("id") Long id, HttpServletResponse resp) throws IOException {
+        packageService.build(resp, id);
         return new ResponseEntity<>(HttpStatus.OK);
-
     }
 
     @RequestMapping(value = "/standardbuild/{id}", method = RequestMethod.GET)
     public ResponseEntity standardbuild(@PathVariable("id") Long id) throws IOException {
         packageService.standardbuild(id);
         return new ResponseEntity<>(HttpStatus.OK);
-
     }
 
     @RequestMapping(value = "/checksource/{id}", method = RequestMethod.POST)
     public ResponseEntity checksource(@PathVariable("id") Long id, HttpServletResponse resp) throws IOException {
         packageService.checksource(resp, id);
         return new ResponseEntity<>(HttpStatus.OK);
-
     }
 }
