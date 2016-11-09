@@ -129,7 +129,7 @@ public class PackageService {
     public void checksource(HttpServletResponse resp, Long id)
             throws JsonParseException, JsonMappingException, IOException {
         Project project = projectService.get(id);
-        String command = "/opt/do_source/scan.sh --p=" + project.getName() + " --path=" + project.getSshUrl();
+        String command = "/opt/do_source/scan.sh --p=" + project.getPath() + " --path=" + project.getSshUrl();
         String output = commandService.executeCommand(resp, command);
     }
 }
