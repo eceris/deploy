@@ -31,7 +31,7 @@ public class PackageController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/build/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/build/{id}", method = RequestMethod.POST)
     public ResponseEntity build(@PathVariable("id") Long id, HttpServletResponse resp) throws IOException {
         packageService.build(resp, id);
         return new ResponseEntity<>(HttpStatus.OK);
