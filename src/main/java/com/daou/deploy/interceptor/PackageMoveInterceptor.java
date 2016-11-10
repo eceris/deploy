@@ -8,8 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -27,16 +25,17 @@ import com.daou.deploy.util.FileUtil;
 import com.daou.deploy.util.FileUtil.PackageNameToken;
 import com.daou.deploy.util.StringUtil;
 
+import lombok.extern.log4j.Log4j;
+
 /**
  * project/{id} 가 호출될 경우를 인터셉트하여 패키지를 옮긴다
  * 
  * @author eceris
  *
  */
+@Log4j
 @Component
 public class PackageMoveInterceptor implements HandlerInterceptor {
-
-    static final Logger logger = LoggerFactory.getLogger(PackageMoveInterceptor.class);
 
     @Autowired
     DeployProperties properties;
@@ -61,7 +60,7 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object obj) throws Exception {
-        logger.info("{} : {}", this.getClass(), req.getRequestURI());
+        log.info("req.getRequestURI()");
         //아이디를 잡아서 project를 가져옴
         //project의 이름으로 tmp에 떨어진 파일들을 모아서 move후에 entity화
         String attachTmpPath = properties.getAttachTmpPath();
@@ -70,8 +69,11 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
         Map pathVariables = (Map) req.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         Project project = projectService.get(Long.parseLong(pathVariables.get("id").toString()));
         //                return files;
+        log.info(project.getPath());
         File dir = new File(attachTmpPath);
-        for (File file : dir.listFiles()) {
+        File[] listFiles = dir.listFiles();
+        log.info(listFiles.length);
+        for (File file : listFiles) {
             //tmp 폴더중에 조회한 프로젝트의 파일이 있다면
             PackageNameToken packageNameToken = FileUtil.getPackageNameToken(file.getName());
             if (StringUtil.equals(project.getName(), packageNameToken.getProject())) {
