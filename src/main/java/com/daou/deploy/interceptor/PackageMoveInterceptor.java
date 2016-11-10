@@ -60,7 +60,7 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object obj) throws Exception {
-        log.info("req.getRequestURI()");
+        log.info(req.getRequestURI());
         //아이디를 잡아서 project를 가져옴
         //project의 이름으로 tmp에 떨어진 파일들을 모아서 move후에 entity화
         String attachTmpPath = properties.getAttachTmpPath();
@@ -76,7 +76,7 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
         for (File file : listFiles) {
             //tmp 폴더중에 조회한 프로젝트의 파일이 있다면
             PackageNameToken packageNameToken = FileUtil.getPackageNameToken(file.getName());
-            if (StringUtil.equals(project.getName(), packageNameToken.getProject())) {
+            if (StringUtil.equals(project.getPath(), packageNameToken.getProject())) {
                 //파일을 옮기고
                 FileUtil.move(file.getPath(), Paths.get(customPath, project.getName(), file.getName()).toString());
                 Attach attach = new Attach(packageNameToken.getName(), file.getPath(),
