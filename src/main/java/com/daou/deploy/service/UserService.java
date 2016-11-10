@@ -62,6 +62,7 @@ public class UserService {
      * @param model
      * @return String
      */
+    @Transactional
     public User update(UserModel.Request model) {
         User user = get(model.getId());
         if (isDuplicatedEmail(model.getEmail()) && StringUtil.notEquals(user.getEmail(), model.getEmail())) {
@@ -84,6 +85,7 @@ public class UserService {
      * @param id
      * @return User
      */
+    @Transactional
     public void delete(Long id) {
         User user = get(id);
         userRepository.delete(user);

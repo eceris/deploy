@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.daou.deploy.domain.Attach;
 import com.daou.deploy.domain.Package;
@@ -59,6 +60,7 @@ public class PackageService {
     /**
      * 패키지 삭제
      */
+    @Transactional
     public void delete(Long id) {
         Package pkg = packageRepository.findOne(id);
         Attach attach = pkg.getAttach();
@@ -73,6 +75,7 @@ public class PackageService {
     /**
      * 프로젝트별 패키지 조회
      */
+    @Transactional
     public PageModel<Package> get(Long id, PageRequest page) {
         Project project = projectRepository.findByGitId(id);
         Page<Package> pkgs = packageRepository.findByProject(project, page);
@@ -90,6 +93,7 @@ public class PackageService {
     /**
      * 패키지 저장(패키지 빌드 수행후 /project/{id}로 들어오는데 이 api가 호출 될 경우 inteceptor가 잡아서 특정위치의 파일들을 entitiy화 함)
      */
+    @Transactional
     public Package create(Package pkg) {
         return packageRepository.save(pkg);
     }

@@ -15,6 +15,7 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(projectInterceptor).addPathPatterns("/project/*");
+        // /project/*/packages 가 호출될 때에 만들어진 패키지 파일들을 엔티티로 만들기 위한 인터셉터 등록
+        registry.addInterceptor(projectInterceptor).addPathPatterns("/project/*/packages");
     }
 }

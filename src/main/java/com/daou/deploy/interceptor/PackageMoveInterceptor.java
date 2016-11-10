@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -61,17 +62,15 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object obj) throws Exception {
         log.info(req.getRequestURI());
-        //아이디를 잡아서 project를 가져옴
-        //project의 이름으로 tmp에 떨어진 파일들을 모아서 move후에 entity화
+        //아이디로 project 조회후 project의 이름으로 tmp에 떨어진 파일들을 모아서 move후에 entity화
         String attachTmpPath = properties.getAttachTmpPath();
         String customPath = properties.getCustomPackagePath();
 
         Map pathVariables = (Map) req.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         Project project = projectService.get(Long.parseLong(pathVariables.get("id").toString()));
-        //                return files;
         File dir = new File(attachTmpPath);
-        File[] listFiles = dir.listFiles();
-        for (File file : listFiles) {
+        for (Object fileObject : ArrayUtils.nullToEmpty(dir.listFiles())) {
+            File file = (File) fileObject;
             //tmp 폴더중에 조회한 프로젝트의 파일이 있다면
             PackageNameToken packageNameToken = FileUtil.getPackageNameToken(file.getName());
             if (StringUtil.equals(project.getPath(), packageNameToken.getProject())) {
