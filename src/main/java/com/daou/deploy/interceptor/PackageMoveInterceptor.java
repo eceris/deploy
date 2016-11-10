@@ -1,6 +1,7 @@
 package com.daou.deploy.interceptor;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -26,6 +27,8 @@ import com.daou.deploy.service.ProjectService;
 import com.daou.deploy.util.FileUtil;
 import com.daou.deploy.util.FileUtil.PackageNameToken;
 import com.daou.deploy.util.StringUtil;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import lombok.extern.log4j.Log4j;
 
@@ -61,8 +64,13 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    @Transactional
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object obj) throws Exception {
+        sync(req);
+        return true;
+    }
+
+    @Transactional
+    private void sync(HttpServletRequest req) throws JsonParseException, JsonMappingException, IOException {
         log.info(req.getRequestURI());
         //아이디로 project 조회후 project의 이름으로 tmp에 떨어진 파일들을 모아서 move후에 entity화
         String attachTmpPath = properties.getAttachTmpPath();
@@ -86,6 +94,5 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
                         Category.valueOf(packageNameToken.getCategory()), attach));
             }
         }
-        return true;
     }
 }
