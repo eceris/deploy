@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,6 +61,7 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
     }
 
     @Override
+    @Transactional
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object obj) throws Exception {
         log.info(req.getRequestURI());
         //아이디로 project 조회후 project의 이름으로 tmp에 떨어진 파일들을 모아서 move후에 entity화
@@ -70,14 +72,15 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
         Project project = projectService.get(Long.parseLong(pathVariables.get("id").toString()));
         File dir = new File(attachTmpPath);
         for (Object fileObject : ArrayUtils.nullToEmpty(dir.listFiles())) {
-            File file = (File) fileObject;
+            File source = (File) fileObject;
             //tmp 폴더중에 조회한 프로젝트의 파일이 있다면
-            PackageNameToken packageNameToken = FileUtil.getPackageNameToken(file.getName());
+            PackageNameToken packageNameToken = FileUtil.getPackageNameToken(source.getName());
             if (StringUtil.equals(project.getPath(), packageNameToken.getProject())) {
                 //파일을 옮기고
-                File move = FileUtil.move(file.getPath(), Paths.get(customPath, project.getPath(), file.getName()).toString());
-                Attach attach = new Attach(packageNameToken.getName(), file.getPath(),
-                        Files.size(file.toPath()) / 1024);
+                File target = FileUtil.move(source.getPath(),
+                        Paths.get(customPath, project.getPath(), source.getName()).toString());
+                Attach attach = new Attach(packageNameToken.getName(), target.getPath(),
+                        Files.size(target.toPath()) / 1024);
                 //entity로 만들어서 저장
                 packageService.create(new Package(null, project, packageNameToken.getRevision(),
                         Category.valueOf(packageNameToken.getCategory()), attach));
