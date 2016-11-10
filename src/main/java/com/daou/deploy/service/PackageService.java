@@ -17,6 +17,7 @@ import com.daou.deploy.domain.model.PageModel;
 import com.daou.deploy.repository.AttachRepository;
 import com.daou.deploy.repository.PackageRepository;
 import com.daou.deploy.repository.ProjectRepository;
+import com.daou.deploy.util.CommandExecutor;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -42,7 +43,7 @@ public class PackageService {
     ProjectService projectService;
 
     @Autowired
-    CommandService commandService;
+    CommandExecutor commandExecutor;
 
     /**
      * 패키지 다운로드
@@ -89,8 +90,8 @@ public class PackageService {
     /**
      * 패키지 저장(패키지 빌드 수행후 /project/{id}로 들어오는데 이 api가 호출 될 경우 inteceptor가 잡아서 특정위치의 파일들을 entitiy화 함)
      */
-    public void save() {
-
+    public Package create(Package pkg) {
+        return packageRepository.save(pkg);
     }
 
     /**
@@ -104,7 +105,7 @@ public class PackageService {
     public void build(HttpServletResponse resp, Long id) throws JsonParseException, JsonMappingException, IOException {
         Project project = projectService.get(id);
         String command = "/opt/sites/web_make_custom.sh --p=" + project.getPath() + " --path=" + project.getSshUrl();
-        String output = commandService.executeCommand(resp, command);
+        String output = commandExecutor.execute(resp, command);
     }
 
     /**
@@ -125,7 +126,7 @@ public class PackageService {
             throws JsonParseException, JsonMappingException, IOException {
         Project project = projectService.get(id);
         String command = "/opt/do_source/scan.sh --p=" + project.getPath() + " --path=" + project.getSshUrl();
-        String output = commandService.executeCommand(resp, command);
+        String output = commandExecutor.execute(resp, command);
     }
 
     //    public void buildProject(HttpServletResponse resp, String projectName, String sshUrlToRepo, String version) {

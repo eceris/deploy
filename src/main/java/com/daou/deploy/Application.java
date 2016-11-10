@@ -21,8 +21,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.daou.deploy.properties.LegacyConnectionProperties;
+import com.daou.deploy.config.InterceptorConfig;
+import com.daou.deploy.properties.DeployProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 
@@ -62,6 +64,11 @@ public class Application extends SpringBootServletInitializer {
     }
 
     @Bean
+    public WebMvcConfigurerAdapter webMvcConfigurerAdapter() {
+        return new InterceptorConfig();
+    }
+
+    @Bean
     public Filter characterEncodingFilter() {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
@@ -70,8 +77,8 @@ public class Application extends SpringBootServletInitializer {
     }
 
     @Bean
-    public LegacyConnectionProperties projectProperties() {
-        return new LegacyConnectionProperties();
+    public DeployProperties deployProperties() {
+        return new DeployProperties();
     }
 
     @Bean

@@ -1,22 +1,8 @@
 package com.daou.deploy.util;
 
-import java.nio.file.Path;
-
 import org.apache.commons.lang3.StringUtils;
 
 public class StringUtil {
-
-    public static String getFileName(String fileName) {
-        return fileName.substring(0, fileName.indexOf("."));
-    }
-
-    public static String getFileName(Path filePath) {
-        return filePath.toString().substring(filePath.toString().lastIndexOf("-") + 1);
-    }
-
-    public static String getFileExtension(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
-    }
 
     public static boolean equals(String str1, String str2) {
         return StringUtils.equals(str1, str2);

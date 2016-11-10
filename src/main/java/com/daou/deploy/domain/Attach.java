@@ -18,16 +18,12 @@ public class Attach extends BaseEntity {
     @Column
     private Long size;
 
-    @Column(nullable = false)
-    private String extension;
-
     public Attach() {
     }
 
-    public Attach(String name, String path, String ext, Long size) {
+    public Attach(String name, String path, Long size) {
         this.name = name;
         this.path = path;
-        this.extension = ext;
         this.size = size;
     }
 }

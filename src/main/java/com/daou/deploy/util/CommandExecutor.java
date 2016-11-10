@@ -1,4 +1,4 @@
-package com.daou.deploy.service;
+package com.daou.deploy.util;
 
 import java.io.InputStream;
 
@@ -6,14 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
 
-import com.daou.deploy.util.StreamGobbler;
-
 import lombok.extern.java.Log;
 
 @Service
 @Log
-public class CommandService {
-    public String executeCommand(HttpServletResponse resp, String command) {
+public class CommandExecutor {
+    public String execute(HttpServletResponse resp, String command) {
         StringBuffer output = new StringBuffer();
         Process p = null;
         try {

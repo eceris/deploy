@@ -18,7 +18,7 @@ import com.daou.deploy.domain.model.GitNamespaceModel;
 import com.daou.deploy.domain.model.GitProjectModel;
 import com.daou.deploy.domain.model.ProjectGroupModel;
 import com.daou.deploy.domain.model.ProjectTransferModel;
-import com.daou.deploy.properties.LegacyConnectionProperties;
+import com.daou.deploy.properties.DeployProperties;
 import com.daou.deploy.repository.ProjectRepository;
 import com.daou.deploy.repository.UserRepository;
 import com.daou.deploy.util.StringUtil;
@@ -41,7 +41,7 @@ public class ProjectService {
     private SecurityContext securityContext;
 
     @Autowired
-    private LegacyConnectionProperties legacyProp;
+    private DeployProperties legacyProp;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -137,5 +137,9 @@ public class ProjectService {
             }
         }
         return byGroup;
+    }
+
+    public Project getByName(String name) {
+        return projectRepository.findByName(name);
     }
 }

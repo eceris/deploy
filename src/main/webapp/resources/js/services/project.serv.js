@@ -26,53 +26,6 @@ app.factory('projectFactory', function($q, $filter, $timeout, $http, cfpLoadingB
 		return deferred.promise;
 	};
 
-	projectFactory.buildProject = function(row) {
-		var xhttp = new XMLHttpRequest();
-		var length = 0;
-		var params = "project=" + row.path + "&path=" + row.ssh_url_to_repo;
-		xhttp.open("POST", '/project/build', true);
-		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.onreadystatechange = function() {
-			var logEl = $('#log').find('pre');
-			if (xhttp.readyState == 2) {
-				cfpLoadingBar.start();
-			}
-			if (xhttp.readyState > 2 && xhttp.status == 200) {
-				var result = xhttp.responseText.substring(length, xhttp.responseText.length)
-				length = xhttp.responseText.length;
-				logEl.append('<span>' + result + '</span>');
-				$('#log').scrollTop($('#log')[0].scrollHeight);
-			}
-			if (xhttp.readyState == 4) {
-				cfpLoadingBar.complete();
-			}
-		};
-		xhttp.send(params);
-	};
-
-	projectFactory.scanCustomFile = function(row) {
-		var xhttp = new XMLHttpRequest();
-		var length = 0;
-		var params = "project=" + row.path + "&path=" + row.ssh_url_to_repo;
-		xhttp.open("POST", '/project/scancustomfile', true);
-		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.onreadystatechange = function() {
-			var logEl = $('#log').find('pre');
-			if (xhttp.readyState == 2) {
-				cfpLoadingBar.start();
-			}
-			if (xhttp.readyState > 2 && xhttp.status == 200) {
-				var result = xhttp.responseText.substring(length, xhttp.responseText.length)
-				length = xhttp.responseText.length;
-				logEl.append('<span>' + result + '</span>');
-				$('#log').scrollTop($('#log')[0].scrollHeight);
-			}
-			if (xhttp.readyState == 4) {
-				cfpLoadingBar.complete();
-			}
-		};
-		xhttp.send(params);
-	};
 
 	projectFactory.buildStandardProject = function(prj, version, branch) {
 		$('#buildBtn').hide();
