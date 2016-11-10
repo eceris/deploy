@@ -69,10 +69,8 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
         Map pathVariables = (Map) req.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         Project project = projectService.get(Long.parseLong(pathVariables.get("id").toString()));
         //                return files;
-        log.info(project.getPath());
         File dir = new File(attachTmpPath);
         File[] listFiles = dir.listFiles();
-        log.info(listFiles.length);
         for (File file : listFiles) {
             //tmp 폴더중에 조회한 프로젝트의 파일이 있다면
             PackageNameToken packageNameToken = FileUtil.getPackageNameToken(file.getName());

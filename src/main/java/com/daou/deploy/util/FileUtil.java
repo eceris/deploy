@@ -22,8 +22,6 @@ public class FileUtil {
 
     static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
-    static final PackageNameToken packageNameToken = null;
-
     public static File move(String sourceStr, String targetStr) {
         // source : /opt/Deploy/attach/tmp/CUSTOM-bluecom-201611100015.tar.gz
         // target : /opt/Deploy/attach/custom/bluecom/CUSTOM-bluecom-201611100015.tar.gz
@@ -56,7 +54,7 @@ public class FileUtil {
      *
      */
     @Data
-    public class PackageNameToken {
+    public static class PackageNameToken {
         //CUSTOM-bluecom-201611100015.tar.gz 
         String name; //CUSTOM-bluecom-201611100015
         String category; // CUSTOM
@@ -65,12 +63,13 @@ public class FileUtil {
     }
 
     public static PackageNameToken getPackageNameToken(String fileName) {
+        PackageNameToken packageNameToken = new PackageNameToken();
         String file = getFileName(fileName);
         String[] tokens = file.split("-");
-        packageNameToken.name = fileName;
-        packageNameToken.category = tokens[0];
-        packageNameToken.project = tokens[1];
-        packageNameToken.revision = tokens[2];
+        packageNameToken.setName(fileName);
+        packageNameToken.setCategory(tokens[0]);
+        packageNameToken.setProject(tokens[1]);
+        packageNameToken.setRevision(tokens[2]);
         return packageNameToken;
     }
 
