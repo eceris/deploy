@@ -76,7 +76,7 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
             PackageNameToken packageNameToken = FileUtil.getPackageNameToken(file.getName());
             if (StringUtil.equals(project.getPath(), packageNameToken.getProject())) {
                 //파일을 옮기고
-                FileUtil.move(file.getPath(), Paths.get(customPath, project.getName(), file.getName()).toString());
+                FileUtil.move(file.getPath(), Paths.get(customPath, project.getPath(), file.getName()).toString());
                 Attach attach = new Attach(packageNameToken.getName(), file.getPath(),
                         Files.size(file.toPath()) / 1024);
                 //entity로 만들어서 저장
