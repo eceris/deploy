@@ -77,7 +77,7 @@ public class PackageService {
      */
     @Transactional
     public PageModel<Package> get(Long id, PageRequest page) {
-        Project project = projectRepository.findByGitId(id);
+        Project project = projectRepository.findOne(id);
         Page<Package> pkgs = packageRepository.findByProject(project, page);
         return new PageModel<Package>(pkgs);
     }
@@ -108,7 +108,8 @@ public class PackageService {
      */
     public void build(HttpServletResponse resp, Long id) throws JsonParseException, JsonMappingException, IOException {
         Project project = projectService.get(id);
-        String command = "/opt/sites/web_make_custom.sh --p=" + project.getPath() + " --path=" + project.getSshUrl();
+        String command = "/opt/deploy/tool/web_make_custom.sh --p=" + project.getPath() + " --path="
+                + project.getSshUrl();
         String output = commandExecutor.execute(resp, command);
     }
 
@@ -129,7 +130,7 @@ public class PackageService {
     public void checksource(HttpServletResponse resp, Long id)
             throws JsonParseException, JsonMappingException, IOException {
         Project project = projectService.get(id);
-        String command = "/opt/do_source/scan.sh --p=" + project.getPath() + " --path=" + project.getSshUrl();
+        String command = "/opt/deploy/tool/scan.sh --p=" + project.getPath() + " --path=" + project.getSshUrl();
         String output = commandExecutor.execute(resp, command);
     }
 

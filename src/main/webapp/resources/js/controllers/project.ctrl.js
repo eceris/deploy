@@ -120,20 +120,21 @@ app.controller('projectDetailController', function($scope, $routeParams, project
 		});
 	};
 
-	$scope.download = function() {
-		window.location = '/package/' + id;
+	$scope.download = function(pkgId) {
+		window.location = '/package/' + pkgId;
 	};
 	$scope.build = function() {
 		projectDetailFactory.build($scope.id);
 	};
 	$scope.standardbuild = function() {
-		projectDetailFactory.standardbuild($scope.id);
+		alert('아직 동작하지 않는 기능입니다. 빨리 만들어 놓을께요...');
+//		projectDetailFactory.standardbuild($scope.id);
 	};
 	$scope.checksource = function() {
 		projectDetailFactory.checksource($scope.id);
 	};
 	$scope.mobile = function() {
-		alert('TODO' + $scope.id);
+		alert('아직 동작하지 않는 기능입니다. 빨리 만들어 놓을께요...');
 	};
 
 });

@@ -8,7 +8,5 @@ import com.daou.deploy.domain.Project;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    Project findByGitId(Long gitId);
-
     Project findByName(String name);
 }

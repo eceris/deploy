@@ -24,20 +24,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/home">Daou Tech</a>
+                    <a class="navbar-brand" href="/#projects">Daou Tech</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                     	<sec:authorize access="hasRole('ROLE_ADMIN')">
                        		<li><a href="/#upload">업로드</a></li>
                         </sec:authorize>
-                        <li>
+                        <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_DEVELOPER')">
+                        	<li><a href="/#download/core">제품다운로드</a></li>
+                        </sec:authorize>
+                        <!-- <li>
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">다운로드<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/#download/site">고객사-프로젝트</a></li>
                                 <li><a href="/#download/core">패키지</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                         <li><a href="/#projects">프로젝트</a></li>
                         <sec:authorize access="hasRole('ROLE_ADMIN')">
 	                        <li class="dropdown">

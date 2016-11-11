@@ -1,6 +1,10 @@
 <div ng-app="distributeApp" ng-controller="ProjectCtrl as pp" >
-	<div class="jumbotron" style="height:10px;">
-		<p>프로젝트 목록</p>
+	<div class="page-header">
+    <h1>프로젝트 목록</h1>
+	    <p class="lead">각 프로젝트의 목록입니다.<br>
+	        GUEST 권한을 가진 사용자는 패키지 다운로드합니다.<br>
+	        DEVELOPER와 ADMIN 권한을 가진 사용자는 빌드 수행가능합니다.<br>
+	    </p>
 	</div>
    <table class="table" st-pipe="pp.callServer" st-table="pp.displayed">
       <thead>

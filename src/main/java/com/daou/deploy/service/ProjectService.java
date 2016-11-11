@@ -55,8 +55,9 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Transactional
     public Project get(Long id) throws JsonParseException, JsonMappingException, IOException {
-        Project project = projectRepository.findByGitId(id);
+        Project project = projectRepository.findOne(id);
         if (project == null) {
             String gitUrl = legacyProp.getGitUrl();
             String privateToken = legacyProp.getPrivateToken();
@@ -79,7 +80,7 @@ public class ProjectService {
             System.out.println(projectModel);
             project = new Project();
             project.setCreatedAt(projectModel.getCreated_at());
-            project.setGitId(projectModel.getId());
+            project.setId(projectModel.getId());
             project.setHttpUrl(projectModel.getHttp_url_to_repo());
             project.setName(projectModel.getName());
             project.setNamespace(projectModel.getNamespace().getPath());
