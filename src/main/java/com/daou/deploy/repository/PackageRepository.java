@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.daou.deploy.domain.Category;
 import com.daou.deploy.domain.Package;
 import com.daou.deploy.domain.Project;
 
@@ -16,6 +17,8 @@ public interface PackageRepository extends JpaRepository<Package, Long> {
     //    Package findByAttachId(Long id);
 
     Page<Package> findByProject(Project project, Pageable page);
+
+    Page<Package> findByCategory(Category category, Pageable page);
 
     //    List<Package> findByCategoryAndProject(Category category, String project);
 

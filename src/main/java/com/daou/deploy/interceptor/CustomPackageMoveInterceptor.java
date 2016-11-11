@@ -25,7 +25,7 @@ import com.daou.deploy.properties.DeployProperties;
 import com.daou.deploy.service.PackageService;
 import com.daou.deploy.service.ProjectService;
 import com.daou.deploy.util.FileUtil;
-import com.daou.deploy.util.FileUtil.PackageNameToken;
+import com.daou.deploy.util.FileUtil.CustomPackageNameToken;
 import com.daou.deploy.util.StringUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -40,7 +40,7 @@ import lombok.extern.log4j.Log4j;
  */
 @Log4j
 @Component
-public class PackageMoveInterceptor implements HandlerInterceptor {
+public class CustomPackageMoveInterceptor implements HandlerInterceptor {
 
     @Autowired
     DeployProperties properties;
@@ -73,7 +73,7 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
     private void sync(HttpServletRequest req) throws JsonParseException, JsonMappingException, IOException {
         log.info(req.getRequestURI());
         //아이디로 project 조회후 project의 이름으로 tmp에 떨어진 파일들을 모아서 move후에 entity화
-        String attachTmpPath = properties.getAttachTmpPath();
+        String attachTmpPath = properties.getAttachTempPath();
         String customPath = properties.getCustomPackagePath();
 
         Map pathVariables = (Map) req.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
@@ -81,16 +81,19 @@ public class PackageMoveInterceptor implements HandlerInterceptor {
         File dir = new File(attachTmpPath);
         for (Object fileObject : ArrayUtils.nullToEmpty(dir.listFiles())) {
             File source = (File) fileObject;
+            if (!source.getName().startsWith("CUSTOM")) {
+                //파일이름이 CUSTOM으로 시작하지 않으면 건너뜀
+                continue;
+            }
             //tmp 폴더중에 조회한 프로젝트의 파일이 있다면
-            PackageNameToken packageNameToken = FileUtil.getPackageNameToken(source.getName());
+            CustomPackageNameToken packageNameToken = FileUtil.getCustomPackageNameToken(source.getName());
             if (StringUtil.equals(project.getPath(), packageNameToken.getProject())) {
                 //파일을 옮기고
                 File target = FileUtil.move(source.getPath(),
                         Paths.get(customPath, project.getPath(), source.getName()).toString());
-                Attach attach = new Attach(packageNameToken.getName(), target.getPath(),
-                        Files.size(target.toPath()) / 1024);
+                Attach attach = new Attach(target.getName(), target.getPath(), Files.size(target.toPath()));
                 //entity로 만들어서 저장
-                packageService.create(new Package(null, project, packageNameToken.getRevision(),
+                packageService.create(new Package(packageNameToken.getVersion(), project,
                         Category.valueOf(packageNameToken.getCategory()), attach));
             }
         }

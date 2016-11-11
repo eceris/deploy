@@ -9,5 +9,5 @@ INSERT INTO ds_users(created_at, updated_at, email, login_id, name, password, ro
 INSERT INTO ds_users(created_at, updated_at, email, login_id, name, password, role) VALUES (now(), now(), 'test9@daou.co.kr', 'test9', '테스트9', 'bb42003f40adc32cc8378002ebb11fbecd79abbaa6f8a9c5a3655f5bc10cce0909952f55836b9c60', 'ROLE_GUEST');
 INSERT INTO ds_users(created_at, updated_at, email, login_id, name, password, role) VALUES (now(), now(), 'test10@daou.co.kr', 'test10', '테스트10', 'bb42003f40adc32cc8378002ebb11fbecd79abbaa6f8a9c5a3655f5bc10cce0909952f55836b9c60', 'ROLE_GUEST');
 
-
-
+INSERT INTO ds_projects(id, created_at, http_url, name, namespace, path, ssh_url, web_url) VALUES (1, now(), '', '다우오피스', 'standard', 'daouoffice', '', '');
+INSERT INTO ds_projects(id, created_at, http_url, name, namespace, path, ssh_url, web_url) VALUES (2, now(), '', '테라스메일스위트', 'standard', 'tms', '', '');

@@ -18,14 +18,11 @@ import lombok.NoArgsConstructor;
 @Entity(name = "ds_packages")
 public class Package extends BaseEntity {
 
-    @Column
+    @Column(nullable = false)
     private String version;
 
     @ManyToOne
     private Project project;
-
-    @Column(nullable = false)
-    private String revision;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

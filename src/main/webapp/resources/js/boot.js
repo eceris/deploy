@@ -13,14 +13,17 @@ head.load(
     { file: 'resources/js/services/history.serv.js' },
     { file: 'resources/js/services/project.serv.js' },
     { file: 'resources/js/services/customer.serv.js' },
+    { file: 'resources/js/services/download.serv.js' },
     
     { file: 'resources/js/controllers/common.ctrl.js' },
     { file: 'resources/js/controllers/user.ctrl.js' },
     { file: 'resources/js/controllers/history.ctrl.js' },
     { file: 'resources/js/controllers/project.ctrl.js' },
     { file: 'resources/js/controllers/customer.ctrl.js' },
+    { file: 'resources/js/controllers/download.ctrl.js' },
     
     { file: 'resources/js/directives/directives.js' },
+    { file: 'resources/js/filters/filters.js' },
     { file: 'resources/libs/angular/loading-bar.min.js' }
 //    { file: '//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.js' }
 );

@@ -42,8 +42,8 @@ public class DeployProperties {
     @Getter
     private String attachBasePath;//attach base path
 
-    public String getAttachTmpPath() {
-        return Paths.get(attachBasePath, "tmp").toString();
+    public String getAttachTempPath() {
+        return Paths.get(attachBasePath, "temp").toString();
     }
 
     public String getCustomPackagePath() {
@@ -51,7 +51,7 @@ public class DeployProperties {
     }
 
     public String getDoPackagePath() {
-        return Paths.get(attachBasePath, "do").toString();
+        return Paths.get(attachBasePath, "daouoffice").toString();
     }
 
     public String getTmsPackagePath() {

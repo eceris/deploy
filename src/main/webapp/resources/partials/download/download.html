@@ -1,0 +1,50 @@
+<div class="page-header">
+    <h1>제품 다운로드</h1>
+    <p class="lead">업그레이드, 설치 패키지를 다운로드 합니다.<br>
+        DEVELOPER와 ADMIN 권한을 가진 사용자만 사용 가능합니다.<br>
+    </p>
+</div>
+<div ng-app="distributeApp" class="table-container" ng-controller="downloadCtrl as ctrl">
+    <!-- <input ng-model="searchText" class="text-center"  placeholder="파일이름, 버전, 사이트" ng-change="filter()">
+        <span class="glyphicon glyphicon-search"></span>  -->
+    <table class="table table-striped" st-pipe="ctrl.callServer" st-table="ctrl.displayed">
+        <thead>
+            <tr>
+                <th st-sort="category" st-skip-natural="true">제품명</th>
+                <th st-sort="attach.name" st-skip-natural="true">파일명</th>
+                <th st-sort="version" st-skip-natural="true">버전</th>
+                <th st-sort="cretedAt" st-skip-natural="true">등록일</th>
+                <th st-sort="attach.size" st-skip-natural="true">파일크기</th>
+                <th>다운로드</th>
+            </tr>
+        </thead>
+        <tbody ng-show="!ctrl.isLoading">
+            <tr ng-repeat="row in ctrl.displayed">
+            <td class="ng-binding">{{row.category}}</td>
+               <td class="ng-binding">{{row.attach.name}}</td>
+               <td class="ng-binding">{{row.version}}</td>
+               <td class="ng-binding"> {{row.createdAt | date : 'yyyy/MM/dd/ HH:mm:ss'}}</td>
+               <td class="ng-binding">{{ row.attach.size | bytes }}</td>
+               
+                <td>
+                    <button type="button" ng-click="download(row.id)" class="btn btn-sm btn-primary">
+                    <i class="glyphicon glyphicon-download" title="다운로드"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <tbody ng-show="ctrl.isLoading">
+            <tr>
+                <td colspan="6" class="text-center">
+                    <div
+                        class="loading-indicator"></div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="text-center" st-pagination="" st-items-by-page="20" colspan="6"></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

@@ -8,5 +8,5 @@ import com.daou.deploy.domain.Project;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    Project findByName(String name);
+    Project findByNamespaceAndPath(String namespace, String path);
 }

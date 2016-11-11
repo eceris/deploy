@@ -35,7 +35,7 @@ public class PackageController {
     @RequestMapping(value = "/package/{id}", method = RequestMethod.GET)
     public ResponseEntity<InputStreamResource> fileDownload1(@PathVariable("id") Long id) throws IOException {
 
-        File file = packageService.donwload(id);
+        File file = packageService.download(id);
         HttpHeaders respHeaders = new HttpHeaders();
         respHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         respHeaders.setContentLength(file.length());

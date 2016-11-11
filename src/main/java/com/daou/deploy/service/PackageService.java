@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.daou.deploy.domain.Attach;
+import com.daou.deploy.domain.Category;
 import com.daou.deploy.domain.Package;
 import com.daou.deploy.domain.Project;
 import com.daou.deploy.domain.model.PageModel;
@@ -51,7 +52,7 @@ public class PackageService {
      * 
      * @return
      */
-    public File donwload(Long id) {
+    public File download(Long id) {
         Package pkg = packageRepository.findOne(id);
         String path = pkg.getAttach().getPath();
         return new File(path);
@@ -79,6 +80,15 @@ public class PackageService {
     public PageModel<Package> get(Long id, PageRequest page) {
         Project project = projectRepository.findOne(id);
         Page<Package> pkgs = packageRepository.findByProject(project, page);
+        return new PageModel<Package>(pkgs);
+    }
+
+    /**
+     * 카테고리별 패키지 조회
+     */
+    @Transactional
+    public PageModel<Package> get(Category category, PageRequest page) {
+        Page<Package> pkgs = packageRepository.findByCategory(category, page);
         return new PageModel<Package>(pkgs);
     }
 

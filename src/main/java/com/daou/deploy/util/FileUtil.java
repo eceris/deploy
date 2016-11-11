@@ -47,6 +47,10 @@ public class FileUtil {
         return fileName.substring(fileName.indexOf("."));
     }
 
+    public static String getTarGzFileName(String fileName) {
+        return fileName.substring(0, fileName.indexOf(".tar.gz"));
+    }
+
     /**
      * 파일이름에서 정보를 뽑아내기 위한 클래스
      * 
@@ -54,23 +58,47 @@ public class FileUtil {
      *
      */
     @Data
-    public static class PackageNameToken {
-        //CUSTOM-bluecom-201611100015.tar.gz 
+    public static class CustomPackageNameToken {
+        //CUSTOM-bluecom-201611100015.tar.gz
+        //TMS_v9.4.0.1_Linux_patch.tar.gz
+        //DaouOffice_v2.3.6.2_Linux_install.tar.gz
         String name; //CUSTOM-bluecom-201611100015
         String category; // CUSTOM
         String project; // bluecom
-        String revision; // 201611100015
+        String version; // 201611100015
     }
 
-    public static PackageNameToken getPackageNameToken(String fileName) {
-        PackageNameToken packageNameToken = new PackageNameToken();
-        String file = getFileName(fileName);
+    public static CustomPackageNameToken getCustomPackageNameToken(String fileName) {
+        CustomPackageNameToken customPackageNameToken = new CustomPackageNameToken();
+        String file = getTarGzFileName(fileName);
         String[] tokens = file.split("-");
-        packageNameToken.setName(fileName);
-        packageNameToken.setCategory(tokens[0]);
-        packageNameToken.setProject(tokens[1]);
-        packageNameToken.setRevision(tokens[2]);
-        return packageNameToken;
+        customPackageNameToken.setName(fileName);
+        customPackageNameToken.setCategory(tokens[0]);
+        customPackageNameToken.setProject(tokens[1]);
+        customPackageNameToken.setVersion(tokens[2]);
+        return customPackageNameToken;
+    }
+
+    @Data
+    public static class StandardPackageNameToken {
+        //CUSTOM-bluecom-201611100015.tar.gz
+        //TMS_v9.4.0.1_Linux_patch.tar.gz
+        //DaouOffice_v2.3.6.2_Linux_install.tar.gz
+        String name; // TMS_v9.4.0.1_Linux_patch
+        String category; // TMS
+        String version; // 9.4.0.1
+        String type; // install
+    }
+
+    public static StandardPackageNameToken getStandardPackageNameToken(String fileName) {
+        StandardPackageNameToken standardPackageNameToken = new StandardPackageNameToken();
+        String file = getTarGzFileName(fileName);
+        String[] tokens = file.split("_");
+        standardPackageNameToken.setName(fileName);
+        standardPackageNameToken.setCategory(tokens[0]);
+        standardPackageNameToken.setVersion(tokens[1].replace("v", ""));
+        standardPackageNameToken.setType(tokens[3]);
+        return standardPackageNameToken;
     }
 
 }

@@ -32,7 +32,13 @@
                        		<li><a href="/#upload">업로드</a></li>
                         </sec:authorize>
                         <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_DEVELOPER')">
-                        	<li><a href="/#download/core">제품다운로드</a></li>
+                        	<li class="dropdown">
+		                        <a href="" class="dropdown-toggle" data-toggle="dropdown">제품다운로드<b class="caret"></b></a>
+	                            <ul class="dropdown-menu">
+	                                <li><a href="/#download/daouoffice">Daouoffice</a></li>
+	                                <li><a href="/#download/tms">TMS</a></li>
+	                            </ul>
+                            </li>
                         </sec:authorize>
                         <!-- <li>
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">다운로드<b class="caret"></b></a>

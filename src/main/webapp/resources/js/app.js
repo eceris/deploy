@@ -8,7 +8,7 @@ app.config(['$routeProvider', '$locationProvider', function AppConfig($routeProv
 	$routeProvider.
 
 	when('/', {
-		redirectTo : '/project',
+		redirectTo : '/projects',
 	}).
 
 	when('/home', {
@@ -25,6 +25,10 @@ app.config(['$routeProvider', '$locationProvider', function AppConfig($routeProv
 
 	when('/download/core', {
 		templateUrl : 'resources/partials/downloadView/core.html'
+	}).
+	
+	when('/download/:category', {
+		templateUrl : 'resources/partials/download/download.html'
 	}).
 
 	when('/projects', {

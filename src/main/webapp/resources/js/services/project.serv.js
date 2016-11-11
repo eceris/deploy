@@ -4,7 +4,6 @@
 
 app.factory('projectFactory', function($q, $filter, $timeout, $http, cfpLoadingBar) {
 	var projectFactory = {};
-	var projectInfo = {};
 	projectFactory.getProjectList = function(start, number, params) {
 		console.log(params);
 		var deferred = $q.defer();

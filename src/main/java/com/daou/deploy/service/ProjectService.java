@@ -37,6 +37,8 @@ import com.google.common.collect.Lists;
 @Service
 public class ProjectService {
 
+    private static final String STANDARD_NAMESPACE = "standard";
+
     @Autowired
     private SecurityContext securityContext;
 
@@ -140,7 +142,8 @@ public class ProjectService {
         return byGroup;
     }
 
-    public Project getByName(String name) {
-        return projectRepository.findByName(name);
+    @Transactional(readOnly = true)
+    public Project getStandardProjectByPath(String path) {
+        return projectRepository.findByNamespaceAndPath(STANDARD_NAMESPACE, path);
     }
 }
