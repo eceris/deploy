@@ -89,18 +89,24 @@ app.controller('projectModalCtrl', function($scope, $modalInstance, projectFacto
 app.controller('projectDetailController', function($scope, $routeParams, projectDetailFactory) {
 	var id = $routeParams.id;
 	$scope.id = $routeParams.id;
-	var ctrl = this;
-	ctrl.displayed = [];
-	ctrl.callServer = function callServer(tableState) {
-		ctrl.isLoading = true;
-		var pagination = tableState.pagination;
-		var start = pagination.start || 0;
-		var number = pagination.number || 10;
-		projectDetailFactory.getFiles(id, start, number, tableState).then(function(result) {
-			ctrl.displayed = result.data;
-			tableState.pagination.numberOfPages = result.numberOfPages;
-			ctrl.isLoading = false;
-		});
+	$scope.init = function() {
+		$scope.get();
+		$scope.getPacakges();
+	};
+	$scope.getPacakges = function() {
+		var ctrl = this;
+		ctrl.displayed = [];
+		ctrl.callServer = function callServer(tableState) {
+			ctrl.isLoading = true;
+			var pagination = tableState.pagination;
+			var start = pagination.start || 0;
+			var number = pagination.number || 10;
+			projectDetailFactory.getFiles(id, start, number, tableState).then(function(result) {
+				ctrl.displayed = result.data;
+				tableState.pagination.numberOfPages = result.numberOfPages;
+				ctrl.isLoading = false;
+			});
+		};	
 	};
 
 	$scope.get = function() {
@@ -125,6 +131,7 @@ app.controller('projectDetailController', function($scope, $routeParams, project
 	};
 	$scope.build = function() {
 		projectDetailFactory.build($scope.id);
+		$scope.getPacakges();
 	};
 	$scope.standardbuild = function() {
 		alert('아직 동작하지 않는 기능입니다. 빨리 만들어 놓을께요...');
