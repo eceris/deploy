@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 30초마다 설정 파일의 변경을 확인한다. 파일이 변경되면 다시 로딩한다 -->
+<!-- <configuration scan="true" scanPeriod="30 seconds"> -->
 <configuration debug="true">
+	<!-- 10MB가 넘어가면 catalina-2016-11-14.0.log.tar.gz 으로 ROLLING -->
     <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily -->
-            <fileNamePattern>/catalina-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+            <fileNamePattern>catalina-%d{yyyy-MM-dd}.%i.log.tar.gz</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <!-- or whenever the file size reaches 10MB -->
                 <maxFileSize>10MB</maxFileSize>
@@ -20,11 +23,23 @@
     </appender>
     
     <!-- Loggers -->
-    <logger name="org.springframework">
+    <logger name="org.springframework.core">
         <level value="info" />
     </logger>
+    <logger name="org.springframework.beans">
+        <level value="info" />
+    </logger>
+    <logger name="org.springframework.context">
+        <level value="info" />
+    </logger>
+    <logger name="org.springframework.web">
+        <level value="info" />
+    </logger>
+    <logger name="java.sql">
+        <level value="debug" />
+    </logger>
     <root level="info">
-       <appender-ref ref="ROLLING"/> 
+       <appender-ref ref="ROLLING"/><!-- 상단에 설정한 ROLLING APPENDER를 root에 반영 -->
        <appender-ref ref="STDOUT" />
     </root>
 </configuration>

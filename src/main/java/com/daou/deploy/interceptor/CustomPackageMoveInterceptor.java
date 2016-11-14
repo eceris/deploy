@@ -30,7 +30,7 @@ import com.daou.deploy.util.StringUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * project/{id} 가 호출될 경우를 인터셉트하여 패키지를 옮긴다
@@ -38,7 +38,7 @@ import lombok.extern.log4j.Log4j;
  * @author eceris
  *
  */
-@Log4j
+@Slf4j
 @Component
 public class CustomPackageMoveInterceptor implements HandlerInterceptor {
 
