@@ -158,11 +158,11 @@ app.factory('projectDetailFactory', function($q, $filter, $timeout, $http, cfpLo
 			if (xhttp.readyState == 4) {
 				console.log('');
 				cfpLoadingBar.complete();
-				defer.resolve();
+				deferred.resolve();
 			}
 		};
 		xhttp.send();
-		return defer.promise;
+		return deferred.promise;
 	};
     
 	return projectDetailFactory;
