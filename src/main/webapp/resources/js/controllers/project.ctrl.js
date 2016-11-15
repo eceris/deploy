@@ -89,25 +89,28 @@ app.controller('projectModalCtrl', function($scope, $modalInstance, projectFacto
 app.controller('projectDetailController', function($scope, $routeParams, projectDetailFactory) {
 	var id = $routeParams.id;
 	$scope.id = $routeParams.id;
+	$scope.ctrl = this;
+	
 	$scope.init = function() {
 		$scope.get();
 		$scope.getPacakges();
 	};
 	$scope.getPacakges = function() {
-		var ctrl = this;
-		ctrl.displayed = [];
-		ctrl.callServer = function callServer(tableState) {
-			ctrl.isLoading = true;
+		$scope.ctrl.displayed = [];
+		$scope.ctrl.callServer = function callServer(tableState) {
+			$scope.ctrl.isLoading = true;
 			var pagination = tableState.pagination;
 			var start = pagination.start || 0;
 			var number = pagination.number || 10;
 			projectDetailFactory.getFiles(id, start, number, tableState).then(function(result) {
-				ctrl.displayed = result.data;
+				$scope.ctrl.displayed = result.data;
 				tableState.pagination.numberOfPages = result.numberOfPages;
-				ctrl.isLoading = false;
+				$scope.ctrl.isLoading = false;
 			});
-		};	
+		};
 	};
+	
+		
 
 	$scope.get = function() {
 		projectDetailFactory.get(id).success(function(data, status, headers, config) {
