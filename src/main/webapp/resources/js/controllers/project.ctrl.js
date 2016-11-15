@@ -133,8 +133,11 @@ app.controller('projectDetailController', function($scope, $routeParams, project
 		window.location = '/package/' + pkgId;
 	};
 	$scope.build = function() {
-		projectDetailFactory.build($scope.id);
-		$scope.getPacakges();
+		projectDetailFactory.build($scope.id).then(function() {
+			console.log("done");
+			$scope.ctrl = {};
+			$scope.getPacakges();
+		});
 	};
 	$scope.standardbuild = function() {
 		alert('아직 동작하지 않는 기능입니다. 빨리 만들어 놓을께요...');
@@ -143,6 +146,7 @@ app.controller('projectDetailController', function($scope, $routeParams, project
 	$scope.checksource = function() {
 		projectDetailFactory.checksource($scope.id).then(function() {
 			console.log("done");
+			$scope.ctrl = {};
 			$scope.getPacakges();
 		});
 	};

@@ -111,6 +111,7 @@ app.factory('projectDetailFactory', function($q, $filter, $timeout, $http, cfpLo
 		logEl.html("");
 		var xhttp = new XMLHttpRequest();
 		var length = 0;
+		var deferred = $q.defer();
 		xhttp.open("POST", '/dev/build/'+id, true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhttp.onreadystatechange = function() {
@@ -125,9 +126,11 @@ app.factory('projectDetailFactory', function($q, $filter, $timeout, $http, cfpLo
 			}
 			if (xhttp.readyState == 4) {
 				cfpLoadingBar.complete();
+				deferred.resolve();
 			}
 		};
 		xhttp.send();
+		return deferred.promise;
 	};
 	projectDetailFactory.standardbuild = function(id) {
 		$http.get('/dev/build/' + id).success(function(data, status, headers, config) {
