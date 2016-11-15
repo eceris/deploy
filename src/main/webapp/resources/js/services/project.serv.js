@@ -122,7 +122,7 @@ app.factory('projectDetailFactory', function($q, $filter, $timeout, $http, cfpLo
 				var result = xhttp.responseText.substring(length, xhttp.responseText.length)
 				length = xhttp.responseText.length;
 				logEl.append('<code>' + result + '</code>');
-				$('#projectLog').scrollTop($('#projectLog')[0].scrollHeight);
+				$(document).scrollTop($(document).height());
 			}
 			if (xhttp.readyState == 4) {
 				cfpLoadingBar.complete();
@@ -156,7 +156,7 @@ app.factory('projectDetailFactory', function($q, $filter, $timeout, $http, cfpLo
 				var result = xhttp.responseText.substring(length, xhttp.responseText.length)
 				length = xhttp.responseText.length;
 				logEl.append('<code>' + result + '</code>');
-				$('#projectLog').scrollTop($('#projectLog')[0].scrollHeight);
+				$(document).scrollTop($(document).height());
 			}
 			if (xhttp.readyState == 4) {
 				console.log('');
