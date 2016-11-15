@@ -138,7 +138,10 @@ app.controller('projectDetailController', function($scope, $routeParams, project
 //		projectDetailFactory.standardbuild($scope.id);
 	};
 	$scope.checksource = function() {
-		projectDetailFactory.checksource($scope.id);
+		projectDetailFactory.checksource($scope.id).then(function() {
+			console.log("done");
+			$scope.getPacakges();
+		});
 	};
 	$scope.mobile = function() {
 		alert('아직 동작하지 않는 기능입니다. 빨리 만들어 놓을께요...');

@@ -142,6 +142,7 @@ app.factory('projectDetailFactory', function($q, $filter, $timeout, $http, cfpLo
 		logEl.html("");
 		var xhttp = new XMLHttpRequest();
 		var length = 0;
+		var deferred = $q.defer();
 		xhttp.open("POST", '/dev/checksource/'+id, true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhttp.onreadystatechange = function() {
@@ -155,10 +156,13 @@ app.factory('projectDetailFactory', function($q, $filter, $timeout, $http, cfpLo
 				$('#projectLog').scrollTop($('#projectLog')[0].scrollHeight);
 			}
 			if (xhttp.readyState == 4) {
+				console.log('');
 				cfpLoadingBar.complete();
+				defer.resolve();
 			}
 		};
 		xhttp.send();
+		return defer.promise;
 	};
     
 	return projectDetailFactory;
