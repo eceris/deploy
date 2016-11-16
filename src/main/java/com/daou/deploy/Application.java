@@ -17,6 +17,8 @@ import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
@@ -28,6 +30,7 @@ import com.daou.deploy.properties.DeployProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 
+@EnableScheduling
 @EnableAutoConfiguration
 @ComponentScan
 public class Application extends SpringBootServletInitializer {
@@ -66,6 +69,14 @@ public class Application extends SpringBootServletInitializer {
     @Bean
     public WebMvcConfigurerAdapter webMvcConfigurerAdapter() {
         return new InterceptorConfig();
+    }
+
+    @Bean
+    public ScheduledExecutorFactoryBean scheduledExecutorService() {
+        //파일 에이징을 위하여
+        ScheduledExecutorFactoryBean bean = new ScheduledExecutorFactoryBean();
+        bean.setPoolSize(1);
+        return bean;
     }
 
     @Bean

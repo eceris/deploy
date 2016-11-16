@@ -1,5 +1,8 @@
 package com.daou.deploy.repository;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +22,8 @@ public interface PackageRepository extends JpaRepository<Package, Long> {
     Page<Package> findByProject(Project project, Pageable page);
 
     Page<Package> findByCategory(Category category, Pageable page);
+
+    List<Package> findByCreatedAtBefore(Date createdAt);
 
     //    List<Package> findByCategoryAndProject(Category category, String project);
 

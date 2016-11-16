@@ -7,10 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 파일과 관련된 기능을 공통으로 제공
@@ -18,9 +16,8 @@ import lombok.Data;
  * @author eceris
  *
  */
+@Slf4j
 public class FileUtil {
-
-    static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
     public static File move(String sourceStr, String targetStr) {
         // source : /opt/Deploy/attach/tmp/CUSTOM-bluecom-201611100015.tar.gz
@@ -34,9 +31,17 @@ public class FileUtil {
             }
             Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            logger.info(e.getMessage());
+            log.info(e.getMessage());
         }
         return target.toFile();
+    }
+
+    public static void delete(String path) {
+        try {
+            Files.deleteIfExists(Paths.get(path));
+        } catch (IOException e) {
+            log.info(e.getMessage());
+        }
     }
 
     public static String getFileName(String fileName) {

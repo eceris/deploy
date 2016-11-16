@@ -2,9 +2,11 @@ package com.daou.deploy.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +22,7 @@ import com.daou.deploy.repository.AttachRepository;
 import com.daou.deploy.repository.PackageRepository;
 import com.daou.deploy.repository.ProjectRepository;
 import com.daou.deploy.util.CommandExecutor;
+import com.daou.deploy.util.FileUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -71,6 +74,23 @@ public class PackageService {
             attachRepository.delete(attach.getId());
         }
         packageRepository.delete(id);
+    }
+
+    /**
+     * 패키지 aging OneWeek
+     */
+    @Transactional
+    public void deleteOneWeekAging() {
+        DateTime now = DateTime.now();
+        DateTime oneWeekBefore = now.minusDays(7);
+        List<Package> targets = packageRepository.findByCreatedAtBefore(oneWeekBefore.toDate());
+        for (Package pkg : targets) {
+            File file = new File(pkg.getAttach().getPath());
+            if (file.exists()) {
+                FileUtil.delete(file.getPath());
+            }
+        }
+        packageRepository.delete(targets);
     }
 
     /**
