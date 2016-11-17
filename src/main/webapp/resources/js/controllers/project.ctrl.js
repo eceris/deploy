@@ -14,79 +14,9 @@ app.controller('ProjectCtrl', function($scope, $http, $modal, projectFactory, $l
 			ctrl.isLoading = false;
 		});
 	};
-
-	$scope.buildProject = function(project) {
-		$modal.open({
-			templateUrl : '/resources/partials/dialogView/projectSuccess.html',
-			size : 'lg',
-			controller : 'ModalController',
-			resolve : {
-				data : function() {
-					return;
-				}
-			}
-		});
-		projectFactory.buildProject(project);
-	};
-
-	$scope.scanCustomFile = function(project) {
-		$modal.open({
-			templateUrl : '/resources/partials/dialogView/projectSuccess.html',
-			size : 'lg',
-			controller : 'ModalController',
-			resolve : {
-				data : function() {
-					return;
-				}
-			}
-		});
-		projectFactory.scanCustomFile(project);
-	};
-
-	$scope.buildStandardProject = function(project) {
-
-		var modalInstance = $modal.open({
-			templateUrl : '/resources/partials/dialogView/buildStandardProject.html',
-			controller : 'projectModalCtrl',
-			size : 'lg',
-			resolve : {
-				project : function() {
-					return project;
-				}
-			}
-		});
-		modalInstance.result.then(function() {});
-	};
-
-	$scope.mobileBuild = function(project) {
-		projectFactory.mobileBuild(project);
-	};
-
 });
 
-app.controller('projectModalCtrl', function($scope, $modalInstance, projectFactory, project, $modal) {
-	$scope.project = project;
-
-	$scope.buildStandardProject = function(version, branch) {
-		if (!(version || 0)) {
-			alert('DO 버전을 입력하세요.')
-			return;
-		}
-		if (!(branch || 0)) {
-			alert('브랜치 명을 입력하세요.')
-			return;
-		}
-		projectFactory.buildStandardProject($scope.project, version, branch);
-	};
-	$scope.ok = function() {
-		$modalInstance.close();
-	};
-	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
-	};
-});
-
-app.controller('projectDetailController', function($scope, $routeParams, projectDetailFactory) {
+app.controller('projectDetailController', function($q, $scope, $routeParams, projectDetailFactory) {
 	var id = $routeParams.id;
 	$scope.id = $routeParams.id;
 	$scope.ctrl = this;
@@ -95,22 +25,22 @@ app.controller('projectDetailController', function($scope, $routeParams, project
 		$scope.get();
 		$scope.getPacakges();
 	};
+	
 	$scope.getPacakges = function() {
 		$scope.ctrl.displayed = [];
-		$scope.ctrl.callServer = function callServer(tableState) {
+		$scope.ctrl.callServer = function callServer(params) {
 			$scope.ctrl.isLoading = true;
-			var pagination = tableState.pagination;
+			$scope.ctrl.params = params;
+			var pagination = params.pagination;
 			var start = pagination.start || 0;
 			var number = pagination.number || 10;
-			projectDetailFactory.getFiles(id, start, number, tableState).then(function(result) {
+			projectDetailFactory.getFiles(id, start, number, params).then(function(result) {
 				$scope.ctrl.displayed = result.data;
-				tableState.pagination.numberOfPages = result.numberOfPages;
+				params.pagination.numberOfPages = result.numberOfPages;
 				$scope.ctrl.isLoading = false;
 			});
 		};
 	};
-	
-		
 
 	$scope.get = function() {
 		projectDetailFactory.get(id).success(function(data, status, headers, config) {
@@ -122,10 +52,18 @@ app.controller('projectDetailController', function($scope, $routeParams, project
 	};
 
 	$scope.delete = function(id) {
+		var deferred = $q.defer();
 		projectDetailFactory.delete(id).success(function(data, status, headers, config) {
 			console.log(data);
+			deferred.resolve();
 		}).error(function(data, status, headers, config) {
 			console.log(status);
+		});
+		
+		deferred.promise.then(function() {
+			console.log("done");
+			$scope.ctrl.displayed = [];
+			$scope.ctrl.callServer($scope.ctrl.params);
 		});
 	};
 
@@ -135,8 +73,9 @@ app.controller('projectDetailController', function($scope, $routeParams, project
 	$scope.build = function() {
 		projectDetailFactory.build($scope.id).then(function() {
 			console.log("done");
-			$scope.ctrl = {};
-			$scope.getPacakges();
+			$scope.ctrl.displayed = [];
+            $scope.ctrl.callServer($scope.ctrl.params);
+            alert('빌드완료! 목록에서 패키지를 확인하세요.');
 		});
 	};
 	$scope.standardbuild = function() {
@@ -146,8 +85,9 @@ app.controller('projectDetailController', function($scope, $routeParams, project
 	$scope.checksource = function() {
 		projectDetailFactory.checksource($scope.id).then(function() {
 			console.log("done");
-			$scope.ctrl = {};
-			$scope.getPacakges();
+			$scope.ctrl.displayed = [];
+			$scope.ctrl.callServer($scope.ctrl.params);
+			alert('소스 비교 완료! 로그에서 에러를 확인하세요.');
 		});
 	};
 	$scope.mobile = function() {
