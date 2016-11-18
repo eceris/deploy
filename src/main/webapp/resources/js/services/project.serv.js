@@ -82,6 +82,7 @@ app.factory('projectDetailFactory', function($q, $filter, $timeout, $http, cfpLo
 				cfpLoadingBar.complete();
 				deferred.resolve();
 			}
+			console.log(xhttp.status);
 		};
 		xhttp.send();
 		return deferred.promise;
@@ -117,6 +118,11 @@ app.factory('projectDetailFactory', function($q, $filter, $timeout, $http, cfpLo
 				cfpLoadingBar.complete();
 				deferred.resolve();
 			}
+			
+			if (xhttp.readyState > 2 && xhttp.status == 403) {
+				console.log('권한오류');
+			}
+			console.log(xhttp.status);
 		};
 		xhttp.send();
 		return deferred.promise;

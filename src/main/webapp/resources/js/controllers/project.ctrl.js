@@ -80,7 +80,6 @@ app.controller('projectDetailController', function($q, $scope, $routeParams, pro
 	};
 	$scope.standardbuild = function() {
 		alert('아직 동작하지 않는 기능입니다. 빨리 만들어 놓을께요...');
-//		projectDetailFactory.standardbuild($scope.id);
 	};
 	$scope.checksource = function() {
 		projectDetailFactory.checksource($scope.id).then(function() {

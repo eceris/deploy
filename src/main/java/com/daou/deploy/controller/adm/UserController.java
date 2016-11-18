@@ -20,7 +20,7 @@ import com.daou.deploy.domain.model.UserModel;
 import com.daou.deploy.domain.model.UserModel.Response;
 import com.daou.deploy.service.UserService;
 
-@Controller
+@Controller(value = "admUserController")
 @RequestMapping("/adm")
 public class UserController {
 

@@ -32,6 +32,10 @@ app.controller('userDetailCtrl', function($scope, $routeParams, $http, userFacto
     $scope.goToList = function() {
         $location.url('/users');
     };
+    
+    $scope.goToHome = function() {
+        $location.url('/projects');
+    };
 
     $scope.init = function(id) {
         // 네임스페이스 바인딩
@@ -116,6 +120,25 @@ app.controller('userDetailCtrl', function($scope, $routeParams, $http, userFacto
             });
     };
 
+    $scope.changepassword = function(password) {
+    	if (password.first != password.second) {
+    		alert('비빌번호가 다릅니다.');
+    	}
+        userFactory.changepassword(password)
+            .success(function(data, status, headers, config) {
+                if (status == 200) {
+                    console.log(data);
+                    alert('변경 완료');
+                    $location.url('/projects');
+                }
+            })
+            .error(function(data, status, headers, config) {
+                console.log(data);
+                alert('변경 실패 : ' + data);
+                $location.url('/password');
+            });
+    };
+    
     $scope.delete = function(user) {
         userFactory.delete(user)
             .success(function(data, status, headers, config) {

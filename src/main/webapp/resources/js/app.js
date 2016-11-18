@@ -55,6 +55,10 @@ app.config(['$routeProvider', '$locationProvider', function AppConfig($routeProv
 		templateUrl : 'resources/partials/project/project.html'
 	}).
 
+	when('/password', {
+		templateUrl : 'resources/partials/user/password.html'
+	}).
+	
 	when('/error', {
 		templateUrl : 'resources/partials/home/error.html'
 	}).

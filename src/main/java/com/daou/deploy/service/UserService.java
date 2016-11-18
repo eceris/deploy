@@ -79,6 +79,16 @@ public class UserService {
         return user;
     }
 
+    @Transactional
+    public User changePassword(Long userId, String password) {
+        User user = get(userId);
+        if (StringUtil.isNotEmpty(password)) {
+            user.setPassword(passwordEncoder.encode(password));
+        }
+        userRepository.save(user);
+        return user;
+    }
+
     /**
      * 유저 삭제
      * 

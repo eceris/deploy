@@ -63,6 +63,9 @@
                             <li><a href="/#customer">고객사관리</a></li>
                             <li><a href="/#users">계정관리</a></li>
                         </sec:authorize>
+                        <sec:authorize access="hasAnyRole('ROLE_GUEST', 'ROLE_DEVELOPER')">
+                        <li><a href="/#password">비밀번호변경</a></li>
+                        </sec:authorize>
                         <li><a href="/logout">로그아웃</a></li>
                     </ul>
                 </div>

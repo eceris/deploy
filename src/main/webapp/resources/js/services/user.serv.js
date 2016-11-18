@@ -54,6 +54,13 @@ app.factory('userFactory', function($q, $filter, $timeout, $http) {
             data: user
         });
     };
+    
+    userFactory.changepassword = function(password) {
+        return $http({
+            method: 'PUT',
+            url: '/user/password?password=' + password
+        });
+    };
 
     userFactory.delete = function(user) {
         return $http({
