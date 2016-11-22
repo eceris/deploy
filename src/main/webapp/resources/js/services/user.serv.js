@@ -56,9 +56,11 @@ app.factory('userFactory', function($q, $filter, $timeout, $http) {
     };
     
     userFactory.changepassword = function(password) {
+    	var obj = {key : "password", value : password.first};
         return $http({
             method: 'PUT',
-            url: '/user/password?password=' + password
+            url: '/user/password',
+            data : JSON.stringify(obj)
         });
     };
 

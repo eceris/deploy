@@ -1,12 +1,12 @@
 package com.daou.deploy.domain.model;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ValueModel {
-
     String key;
     String value;
 }

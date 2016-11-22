@@ -42,18 +42,22 @@ public class DeployProperties {
     @Getter
     private String attachBasePath;//attach base path
 
+    //모든 패키지(커스텀, do, tms)가 잠시 머무르는 위치
     public String getAttachTempPath() {
         return Paths.get(attachBasePath, "temp").toString();
     }
 
+    //temp 위치에서 CustomPackageMoveInterceptor에 의해 옮겨진 위치
     public String getCustomPackagePath() {
         return Paths.get(attachBasePath, "custom").toString();
     }
 
+    //temp 위치에서 StandardPackageMoveInterceptor에 의해 옮겨진 위치
     public String getDoPackagePath() {
         return Paths.get(attachBasePath, "daouoffice").toString();
     }
 
+    //temp 위치에서 StandardPackageMoveInterceptor에 의해 옮겨진 위치
     public String getTmsPackagePath() {
         return Paths.get(attachBasePath, "tms").toString();
     }
